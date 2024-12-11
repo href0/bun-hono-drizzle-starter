@@ -3,7 +3,7 @@ import { swaggerUI } from '@hono/swagger-ui';
 import { errorHandler } from './utils/middlewares/error.middleware';
 import { logger } from 'hono/logger'
 import { customLogger } from './utils/middlewares/logger.middleware';
-import apiRoute from './apis/index'
+import apiRoute from './api/index'
 import { cors } from 'hono/cors'
 import { OpenAPIHono } from '@hono/zod-openapi';
 const app = new OpenAPIHono()

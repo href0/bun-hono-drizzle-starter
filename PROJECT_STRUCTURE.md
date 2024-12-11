@@ -7,7 +7,7 @@
 │       ├── 0001_calm_abomination.sql
 │       └── 0002_shiny_proudstar.sql
 ├── src/
-│   ├── apis/
+│   ├── api/
 │   │   ├── auth/
 │   │   └── user/
 │   │       ├── user.handler.ts

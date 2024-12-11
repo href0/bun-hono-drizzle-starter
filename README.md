@@ -21,7 +21,7 @@ A production-ready starter template for building RESTful APIs using Bun, Hono, a
 │       ├── 0001_calm_abomination.sql
 │       └── 0002_shiny_proudstar.sql
 ├── src/
-│   ├── apis/
+│   ├── api/
 │   │   ├── auth/
 │   │   └── user/
 │   │       ├── user.handler.ts
@@ -73,7 +73,7 @@ A production-ready starter template for building RESTful APIs using Bun, Hono, a
 ### `/drizzle`
 Contains database migration files and metadata in SQL format.
 
-### `/src/apis`
+### `/src/api`
 API route handlers and business logic organized by feature:
 - Route handlers (`.handler.ts`)
 - Database queries (`.query.ts`)
