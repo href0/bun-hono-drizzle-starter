@@ -145,7 +145,7 @@ TypeScript type definitions and interfaces.
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/bun-hono-drizzle-starter-pro.git
+git clone https://github.com/href0/bun-hono-drizzle-starter.git
 ```
 
 2. Install dependencies
