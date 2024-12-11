@@ -1,4 +1,4 @@
-# Bun Hono Drizzle Starter Pro
+# Bun Hono Drizzle Starter
 
 A production-ready starter template for building RESTful APIs using Bun, Hono, and Drizzle ORM with TypeScript.
 
