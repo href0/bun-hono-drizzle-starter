@@ -178,6 +178,24 @@ bun run dev
 - `bun run db:migrate` - Run database migrations
 - `bun run db:seed:user` - Seed database with initial data
 
+### Database Seeder Usage
+
+The `db:seed:user` command is used to populate the database with fake user data. You can specify the number of users you want to generate.
+
+```bash
+# Generate default number of users (100)
+bun run db:seed:user
+
+# Generate specific number of users (e.g., 1,000)
+bun run db:seed:user 1000
+
+# Generate 1 million users
+bun run db:seed:user 1000000
+
+# Show help and usage information
+bun run db:seed:user --help
+
+```
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
