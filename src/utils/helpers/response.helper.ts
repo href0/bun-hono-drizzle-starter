@@ -1,25 +1,37 @@
 import { Context } from "hono"
 import { API_VERSION } from "../constants/app.constant"
-import { MetaSchema, MetaSchemaWithPagination, SuccessResponse } from "../types/response.type"
+import { BaseResponseParams, PaginationMeta, SuccessResponse, SuccessResponseWithPagination } from "../types/response.type"
 
-const baseResponse = <T>(message : string, data : T, meta : MetaSchema | MetaSchemaWithPagination | null) =>{
-  const response : SuccessResponse<T> = {
-    message : message,
-    data : data,
-    meta : {
-      timestamp : new Date(),
-      version : API_VERSION,
-      ...meta
+const createSuccessResponse = <T>({ message, data, pagination }: BaseResponseParams<T>): SuccessResponse<T> | SuccessResponseWithPagination<T> => {
+  const baseResponse: SuccessResponse<T> = {
+    message,
+    data,
+    meta: {
+      timestamp: new Date(),
+      version: API_VERSION,
     }
   }
-  return response
+
+  if (pagination) {
+    return {
+      message,
+      data,
+      meta: {
+        timestamp: new Date(),
+        version: API_VERSION,
+        pagination
+      }
+    } as SuccessResponseWithPagination<T>
+  }
+
+  return baseResponse
 }
 
 export const responseJson =  {
-  "CREATED" : <T>(c : Context, data : T, message : string = 'Created Successfully',  meta : MetaSchema | null = null) => {
-    return c.json(baseResponse(message, data, meta), 201)
+  "CREATED" : <T>(c : Context, data : T, message : string = 'Created Successfully') => {
+    return c.json(createSuccessResponse({message, data}), 201)
   },
-  "OK" : <T>(c : Context, data : T, message : string = 'Success', meta : MetaSchemaWithPagination | null = null) => {
-    return c.json(baseResponse(message, data, meta), 200)
+  "OK" : <T>(c : Context, data : T, message : string = 'Success', pagination: PaginationMeta | null = null) => {
+    return c.json(createSuccessResponse({ message, data, pagination }), 200)
   },
 }

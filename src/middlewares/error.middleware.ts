@@ -1,11 +1,11 @@
 import { Context } from 'hono';
-import { HttpStatusCode } from '../types/http.type';
-import { ErrorResponse } from '../types/error.type';
-import { AppError } from '../errors/base.error';
+import { HttpStatusCode } from '../utils/types/http.type';
+import { ErrorResponse } from '../utils/types/error.type';
+import { AppError } from '../utils/errors/base.error';
 import { env } from 'hono/adapter'
-import { API_VERSION } from '../constants/app.constant';
+import { API_VERSION } from '../utils/constants/app.constant';
 import { ZodError } from 'zod';
-import { logger } from '../../config/logger.config';
+import { logger } from '../config/logger.config';
 
 export const errorHandler = (error : Error, c : Context) => {
    // Handle unknown errors

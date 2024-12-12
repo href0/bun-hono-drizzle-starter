@@ -1,7 +1,8 @@
 import { userSchemaRoute } from './user.schema';
 import { responseJson } from '../../utils/helpers/response.helper';
-import userService from './user.service';
+import { userService } from './user.service';
 import { app } from '../../config/app.config';
+import { MetaSchemaWithPagination } from '../../utils/types/response.type';
 
 app.openapi(userSchemaRoute.create, async (c) => {
   const body = c.req.valid('json')
@@ -11,7 +12,7 @@ app.openapi(userSchemaRoute.create, async (c) => {
 
 app.openapi(userSchemaRoute.findAll, async (c) =>{
   const { rows, pagination } = await userService.findAll(c.req.valid('query'))
-  return responseJson.OK(c, rows, 'Users retrieved successfully', { pagination : pagination })
+  return responseJson.OK(c, rows, 'Users retrieved successfully', pagination)
 })
 
 app.openapi(userSchemaRoute.findOne, async (c) => {

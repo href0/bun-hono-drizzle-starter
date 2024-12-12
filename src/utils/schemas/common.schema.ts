@@ -19,16 +19,23 @@ export const metaSchema = z.object({
   timestamp : z.date().optional().openapi({ example : new Date("2024-03-21T10:30:00.000Z").toISOString() }),
 })
 
-export const metaSchemaWithPagination = metaSchema.extend({
+export const metaSchemaWithPagination = z.object({
+  version : z.string().optional().openapi({ example : "1.0.0" }),
+  timestamp : z.date().optional().openapi({ example : new Date("2024-03-21T10:30:00.000Z").toISOString() }),
   pagination: paginationSchema.optional(),
-});
+})
 
-export const successResponseSchema = <T extends z.ZodType>(dataSchema: T | null = null, isWithPagination : boolean = false) => {
+export const successResponseSchema = <T extends z.ZodType>(dataSchema: T | null = null, metaSchemaType: z.ZodType = metaSchema) => {
   return z.object({
-    message: z.string().openapi({ example : "success" }),
+    message: z.string().openapi({ example: "success" }),
     data: dataSchema || z.null(),
-    meta: isWithPagination ? metaSchemaWithPagination : metaSchema,
+    meta: metaSchemaType,
   })
+}
+
+
+export const successResponseWithPaginationSchema = <T extends z.ZodType>(dataSchema: T) => {
+  return successResponseSchema(dataSchema, metaSchemaWithPagination)
 }
 
 export const errorResponseSchema = z.object({

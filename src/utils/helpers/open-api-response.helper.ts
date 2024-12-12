@@ -1,5 +1,5 @@
 import { z } from '@hono/zod-openapi'
-import { errorResponseSchema, successResponseSchema } from '../schemas/common.schema'
+import { errorResponseSchema, successResponseSchema, successResponseWithPaginationSchema } from '../schemas/common.schema'
 
 export class OpenAPIResponseHelper {
   private static readonly errorResponses = {
@@ -71,7 +71,7 @@ export class OpenAPIResponseHelper {
   }
 
   static createSuccessWithPaginationResponse<T extends z.ZodType>(dataSchema: T, description : string = 'Successful response') {
-    const responseSchema = successResponseSchema(z.array(dataSchema), true)
+    const responseSchema = successResponseWithPaginationSchema(z.array(dataSchema))
     return {
       200: {
         content: {
