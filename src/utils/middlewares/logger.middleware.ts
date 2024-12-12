@@ -1,6 +1,5 @@
-import { getFormattedDate } from "../helpers/date.helper"
+import { logger } from "../../config/logger.config"
 
 export const customLogger = (message: string, ...rest: string[]) => {
-  const timestamp = getFormattedDate()
-  console.log(`${timestamp} [info]: ${message}`, ...rest)
+  logger.info(`${message} ${rest.length > 0 ? JSON.stringify(rest) : ""}`)
 }
