@@ -2,10 +2,10 @@
 import { swaggerUI } from '@hono/swagger-ui';
 import { errorHandler } from './utils/middlewares/error.middleware';
 import { logger } from 'hono/logger'
-import { customLogger } from './utils/middlewares/logger.middleware';
 import apiRoute from './api/index'
 import { cors } from 'hono/cors'
 import { OpenAPIHono } from '@hono/zod-openapi';
+import { customLogger } from './utils/middlewares/logger.middleware';
 const app = new OpenAPIHono()
 
 app.use(logger(customLogger))
@@ -37,6 +37,6 @@ app.route('/api', apiRoute)
 app.onError(errorHandler)
 
 export default {  
-  port: 8888, 
+  port: Bun.env.PORT ?? 3000, 
   fetch: app.fetch,
 } 
