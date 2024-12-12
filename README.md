@@ -42,7 +42,7 @@ A production-ready starter template for building RESTful APIs using Bun, Hono, a
 │   │   └── logger.config.ts
 │   ├── middlewares/
 │   │   ├── error.middleware.ts
-│   │   └── logger.middleware.ts
+│   │   └── http-logging.middleware.ts
 │   ├── models/
 │   │   └── user.model.ts
 │   ├── modules/
