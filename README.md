@@ -1,25 +1,26 @@
 # Bun Hono Drizzle Starter
 
-A production-ready starter template for building RESTful APIs using Bun, Hono, and Drizzle ORM with TypeScript.
+A production-ready starter template to jumpstart your next API project. This template provides a solid foundation with pre-configured Bun, Hono, and Drizzle ORM setup, allowing you to focus on building your application logic rather than setting up the infrastructure.
 
-## Features
+## Why Use This Starter?
 
-- 🚀 Built with Bun + Hono + Drizzle
-- 📚 OpenAPI/Swagger documentation
-  - Interactive API documentation available at `/swagger-doc`
-  - Test API endpoints directly from the browser
-  - Automatic API schema generation
-- 🔄 Dynamic query pagination
-- 🛡️ Type-safe with TypeScript
-- 🗃️ SQL migrations with Drizzle ORM
-- 🔐 Authentication ready
-- 🎯 Request validation with Zod
-- 🌱 Dynamic Data Seeding
-  - Flexible seeder with command line options
-  - Customize number of records to generate
-  - Example: `bun run db:seed:user 1000` generates 1000 users
-  - Default seeding available: `bun run db:seed:user`
-  - Support for large dataset generation (up to millions of records)
+Save hours of initial setup time with a pre-configured project that includes:
+
+- 🚀 Build with Bun + Hono + Drizzle
+- 📚 Ready-to-use OpenAPI/Swagger documentation
+  - Instantly available at `/swagger-doc`
+  - Interactive API testing interface
+  - Automatic schema generation
+- 🔄 Built-in query pagination system
+- 🛡️ Full TypeScript support for type safety
+- 🗃️ Database migration system with Drizzle ORM
+- 🔐 Pre-configured authentication structure
+- 🎯 Request validation using Zod
+- 🌱 Flexible data seeding system
+  - Configurable record generation
+  - Support for large datasets
+  - Example: `bun run db:seed:user 1000` for 1000 test users
+  - Quick start with `bun run db:seed:user`
 
 ## Project Structure
 
@@ -145,42 +146,48 @@ Shared validation schemas using Zod:
 
 ## Getting Started
 
-1. Clone the repository
+1. Clone this starter template:
 ```bash
-git clone https://github.com/href0/bun-hono-drizzle-starter.git
+git clone https://github.com/href0/bun-hono-drizzle-starter.git my-new-project
+cd my-new-project
 ```
 
-2. Install dependencies
+2. Install dependencies:
 ```bash
 bun install
 ```
 
-3. Set up environment variables
+3. Configure your environment:
 ```bash
 cp .env.example .env
+# Edit .env with your settings
 ```
 
-4. Run database migrations
+4. Initialize your database:
 ```bash
 bun run db:migrate
 ```
 
-5. Start development server
+5. Start development:
 ```bash
 bun run dev
 ```
 
-## Scripts
+## Available Scripts
 
-- `bun run dev` - Start development server
-- `bun run build` - Build for production
-- `bun run start` - Start production server
-- `bun run db:generate` - Generate database migrations
-- `bun run db:push` - Push database changes
+Start building your application with these ready-to-use scripts:
+
+- `bun run dev` - Development server with hot reload
+- `bun run build` - Production build
+- `bun run start` - Production server
+- `bun run db:generate` - Generate new migrations
+- `bun run db:push` - Push schema changes
 - `bun run db:migrate` - Run migrations
-- `bun run db:seed:user` - Seed user data
+- `bun run db:seed:user` - Generate test data
 
 ### Database Seeder Usage
+
+Quickly populate your database with test data:
 
 ```bash
 # Generate default number of users (100)
@@ -196,10 +203,34 @@ bun run db:seed:user 1000000
 bun run db:seed:user --help
 ```
 
+## Building Your Application
+
+This starter template provides a solid foundation - just add your business logic:
+
+1. Create new modules in `src/modules/`
+   - Follow the existing module structure (handler, repository, service, schema)
+   - Organize related features together
+   
+2. Define your models in `src/models/`
+   - Use Drizzle ORM for type-safe database operations
+   - Follow the existing model patterns
+
+3. Add routes in your module handlers
+   - Implement new endpoints following the existing pattern
+   - Utilize the pre-configured OpenAPI documentation
+
+4. Implement your business logic in services
+   - Keep handlers thin, move logic to services
+   - Use the repository pattern for database operations
+
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Found ways to improve this starter? Contributions are welcome! Feel free to submit a Pull Request.
 
 ## License
 
-MIT License - feel free to use this starter in your own projects.
+MIT License - Use this starter freely in your projects.
+
+---
+
+Start building your next great API project faster with this production-ready foundation. Focus on what matters - your application's unique features - while we handle the boilerplate.
