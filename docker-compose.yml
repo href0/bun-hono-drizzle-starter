@@ -1,0 +1,15 @@
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+    env_file:
+      - .env
+    volumes:
+      - ./src:/usr/src/app/src
+    command: ["bun", "run", "start"] 
+
+volumes:
+  postgres_data:
