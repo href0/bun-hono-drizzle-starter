@@ -2,6 +2,7 @@ import { count, InferSelectModel, SQL } from "drizzle-orm";
 import { PgTable, PgColumn } from "drizzle-orm/pg-core";
 import { db } from "../../config/db.config";
 import { PaginationMeta } from "../types/response.type";
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "../constants/app.constant";
 
 // Extended interface untuk dynamic options dengan select columns
 export interface DynamicQueryOptions {
@@ -23,7 +24,7 @@ export async function dynamicQueryWithPagination<
   TSelect extends Record<string, PgColumn<any>> = {}
 >(
   table: T,
-  options: Omit<DynamicQueryOptions, 'select'> & { select?: TSelect } = { page: 1, pageSize: 10 }
+  options: Omit<DynamicQueryOptions, 'select'> & { select?: TSelect } = { page: DEFAULT_PAGE, pageSize: DEFAULT_PAGE_SIZE }
 ): Promise<PaginatedResult<Pick<InferSelectModel<T>, keyof TSelect & string>>> {
   // Default values
   const currentPage = Math.max(1, options.page ?? 1);
