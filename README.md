@@ -6,11 +6,20 @@ A production-ready starter template for building RESTful APIs using Bun, Hono, a
 
 - 🚀 Built with Bun + Hono + Drizzle
 - 📚 OpenAPI/Swagger documentation
+  - Interactive API documentation available at `/swagger-doc`
+  - Test API endpoints directly from the browser
+  - Automatic API schema generation
 - 🔄 Dynamic query pagination
 - 🛡️ Type-safe with TypeScript
 - 🗃️ SQL migrations with Drizzle ORM
 - 🔐 Authentication ready
 - 🎯 Request validation with Zod
+- 🌱 Dynamic Data Seeding
+  - Flexible seeder with command line options
+  - Customize number of records to generate
+  - Example: `bun run db:seed:user 1000` generates 1000 users
+  - Default seeding available: `bun run db:seed:user`
+  - Support for large dataset generation (up to millions of records)
 
 ## Project Structure
 
@@ -27,7 +36,7 @@ A production-ready starter template for building RESTful APIs using Bun, Hono, a
 ├── seeders/
 │   └── user.seeder.ts
 ├── src/
-│   ├── api/
+│   ├── modules/
 │   │   ├── auth/
 │   │   └── user/
 │   │       ├── user.handler.ts
@@ -64,7 +73,7 @@ A production-ready starter template for building RESTful APIs using Bun, Hono, a
 │   │       ├── response.type.ts
 │   ├── middlewares/
 │   │   ├── error.middleware.ts
-│   │   └── http-logging.middleware.ts
+│   │   └── logger.middleware.ts
 │   ├── schemas/
 │   │   └── common.schema.ts
 ├── .env
