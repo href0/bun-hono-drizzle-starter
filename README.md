@@ -36,6 +36,15 @@ A production-ready starter template for building RESTful APIs using Bun, Hono, a
 ├── seeders/
 │   └── user.seeder.ts
 ├── src/
+│   ├── config/
+│   │   ├── app.config.ts
+│   │   └── db.config.ts
+│   │   └── logger.config.ts
+│   ├── middlewares/
+│   │   ├── error.middleware.ts
+│   │   └── logger.middleware.ts
+│   ├── models/
+│   │   └── user.model.ts
 │   ├── modules/
 │   │   ├── auth/
 │   │   └── user/
@@ -45,12 +54,6 @@ A production-ready starter template for building RESTful APIs using Bun, Hono, a
 │   │       ├── user.service.ts
 │   │       ├── user.type.ts
 │   │   └── index.ts
-│   ├── config/
-│   │   ├── app.config.ts
-│   │   └── db.config.ts
-│   │   └── logger.config.ts
-│   ├── models/
-│   │   └── user.model.ts
 │   ├── utils/
 │   │   ├── constants/
 │   │       ├── app.constant.ts
@@ -67,15 +70,12 @@ A production-ready starter template for building RESTful APIs using Bun, Hono, a
 │   │       ├── pagination.helper.ts
 │   │       └── response.helper.ts
 │   │   └── interfaces/
+│   │   └── schemas/
+│   │       ├── common.schema.ts
 │   │   └── types/
 │   │       ├── error.type.ts
 │   │       ├── http.type.ts
 │   │       ├── response.type.ts
-│   ├── middlewares/
-│   │   ├── error.middleware.ts
-│   │   └── logger.middleware.ts
-│   ├── schemas/
-│   │   └── common.schema.ts
 ├── .env
 ├── .gitignore
 ├── .dockerignore
