@@ -62,7 +62,6 @@ A production-ready starter template for building RESTful APIs using Bun, Hono, a
 │   │       ├── base.error.ts
 │   │       ├── http.error.ts
 │   │       ├── response.error.ts
-│   │       ├── response.error.ts
 │   │   └── helpers/
 │   │       ├── common.helper.ts
 │   │       ├── date.helper.ts
