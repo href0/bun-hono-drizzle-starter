@@ -7,40 +7,37 @@ A production-ready starter template to jumpstart your next API project. This tem
 Save hours of initial setup time with a pre-configured project that includes:
 
 - 🚀 Build with Bun + Hono + Drizzle
-  - High-performance web framework
-  - Type-safe database operations
-  - Next-generation JavaScript runtime
 - 📚 Ready-to-use OpenAPI/Swagger documentation
   - Instantly available at `/swagger-doc`
   - Interactive API testing interface
   - Automatic schema generation
   - API documentation auto-generation
 - 🔄 Built-in query pagination system
-  - Cursor-based pagination
   - Offset/limit pagination
   - Configurable page sizes
 - 🛡️ Full TypeScript support for type safety
-  - Strict type checking
-  - Type inference
-  - Interface definitions
 - 🗃️ Database migration system with Drizzle ORM
-  - Automated migration generation
-  - Version control for schema
-  - Type-safe schema definition
 - 🔐 Pre-configured authentication structure
   - JWT authentication
   - Role-based access control
   - Middleware protection
 - 🎯 Request validation using Zod
-  - Input validation
-  - Type inference
-  - Custom validation rules
 - 🌱 Flexible data seeding system
   - Configurable record generation
   - Support for large datasets
   - Example: `bun run db:seed:user 1000` for 1000 test users
   - Quick start with `bun run db:seed:user`
   - Custom data generation rules
+
+## Purpose of This Starter
+
+This starter template is designed to serve as a base for new projects using Bun, Hono, and Drizzle ORM. It enables developers to:
+
+1. Skip boilerplate setup.
+2. Quickly start building project-specific features.
+3. Ensure consistent project structure and code quality.
+4. Adopt industry best practices with minimal effort.
+5. Focus on business logic rather than repetitive configuration.
 
 ## Project Structure
 
