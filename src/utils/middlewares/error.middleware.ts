@@ -5,10 +5,9 @@ import { AppError } from '../errors/base.error';
 import { env } from 'hono/adapter'
 import { API_VERSION } from '../constants/app.constant';
 import { ZodError } from 'zod';
+import { logger } from '../../config/logger.config';
 
 export const errorHandler = (error : Error, c : Context) => {
-  console.error('Error:', error);
-
    // Handle unknown errors
    let statusCode : HttpStatusCode = 500
    let response: ErrorResponse = {
@@ -33,6 +32,6 @@ export const errorHandler = (error : Error, c : Context) => {
   if (NODE_ENV === 'development') {
     response.stack = error.stack;
   }
- 
+  logger.error(response.message, {level : 'error', errors : response.errors, stack : NODE_ENV === 'development' ? error.stack : null})
   return c.json(response, statusCode);
 };
