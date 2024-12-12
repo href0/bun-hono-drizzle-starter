@@ -1,8 +1,9 @@
+import { ERROR_MESSAGES } from '../constants/error.constant';
 import { AppError } from './base.error';
 
 export class NotFoundError extends AppError {
   constructor(errors: unknown) {
-    super(404, 'Not Found', errors);
+    super(404, ERROR_MESSAGES.NOT_FOUND, errors);
   }
 }
 
