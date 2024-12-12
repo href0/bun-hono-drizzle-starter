@@ -2,7 +2,7 @@
 import { swaggerUI } from '@hono/swagger-ui';
 import { errorHandler } from './middlewares/error.middleware';
 import { logger } from 'hono/logger'
-import apiRoute from './api/index'
+import apiRoute from './modules/index'
 import { cors } from 'hono/cors'
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { httpLogging } from './middlewares/http-logging.middleware';

@@ -15,28 +15,33 @@ A production-ready starter template for building RESTful APIs using Bun, Hono, a
 ## Project Structure
 
 ```
+├── dist/
+│   └── index.js
 ├── drizzle/
 │   └── meta/
 │       ├── 0000_far_grandmaster.sql
 │       ├── 0001_calm_abomination.sql
 │       └── 0002_shiny_proudstar.sql
+├── logs/
+│   └── info-2024-12-12.log
+├── seeders/
+│   └── user.seeder.ts
 ├── src/
 │   ├── api/
 │   │   ├── auth/
 │   │   └── user/
 │   │       ├── user.handler.ts
-│   │       ├── user.query.ts
+│   │       ├── user.repository.ts
 │   │       ├── user.schema.ts
 │   │       ├── user.service.ts
 │   │       ├── user.type.ts
-│   │       └── index.ts
+│   │   └── index.ts
 │   ├── config/
 │   │   ├── app.config.ts
 │   │   └── db.config.ts
+│   │   └── logger.config.ts
 │   ├── models/
 │   │   └── user.model.ts
-│   ├── seeders/
-│   │   └── user.seeder.ts
 │   ├── utils/
 │   │   ├── constants/
 │   │       ├── app.constant.ts
@@ -52,94 +57,83 @@ A production-ready starter template for building RESTful APIs using Bun, Hono, a
 │   │       ├── open-api-response.helper.ts
 │   │       ├── pagination.helper.ts
 │   │       └── response.helper.ts
-│   ├── interfaces/
+│   │   └── interfaces/
+│   │   └── types/
+│   │       ├── error.type.ts
+│   │       ├── http.type.ts
+│   │       ├── response.type.ts
 │   ├── middlewares/
 │   │   ├── error.middleware.ts
-│   │   └── logger.middleware.ts
+│   │   └── http-logging.middleware.ts
 │   ├── schemas/
 │   │   └── common.schema.ts
-│   └── types/
-│       └── index.ts
 ├── .env
 ├── .gitignore
+├── .dockerignore
+├── Dockerfile
+├── docker-compose.yml
+├── PROJECT_STRUCTURE.md
 ├── bun.lockb
 ├── drizzle.config.ts
 ├── package.json
 └── README.md
+└── tsconfig.json
 ```
 
 ## Directory Structure Overview
 
-### `/drizzle`
-Contains database migration files and metadata in SQL format.
+### `/dist`
+Contains the compiled JavaScript file (index.js) ready for production deployment.
+
+### `/drizzle/meta`
+Contains SQL migration files for database schema management:
+- Sequential migration files with descriptive names
+- Tracks database schema evolution
+
+### `/logs`
+Application logging directory:
+- Daily log files (e.g., info-2024-12-12.log)
+- Captures application events and errors
+
+### `/seeders`
+Database seeding scripts:
+- user.seeder.ts for generating test user data
 
 ### `/src/api`
-API route handlers and business logic organized by feature:
-- Route handlers (`.handler.ts`)
-- Database queries (`.query.ts`)
-- Validation schemas (`.schema.ts`)
-- Business logic (`.service.ts`)
-- TypeScript types (`.type.ts`)
+API modules organized by feature:
+- `auth/`: Authentication related features
+- `user/`: Complete user management module with:
+  - `user.handler.ts`: Route handlers
+  - `user.repository.ts`: Database operations
+  - `user.schema.ts`: Validation schemas
+  - `user.service.ts`: Business logic
+  - `user.type.ts`: Type definitions
 
 ### `/src/config`
-Application-wide configurations:
+Configuration files:
 - `app.config.ts`: Application settings
 - `db.config.ts`: Database configuration
+- `logger.config.ts`: Logging settings
 
 ### `/src/models`
-Database models and schema definitions using Drizzle ORM.
-
-### `/src/seeders`
-Database seed files for initial data population.
+Database models using Drizzle ORM:
+- `user.model.ts`: User entity definition
 
 ### `/src/utils`
-Utility functions, constants, and helpers:
-- Common utilities
-- Date helpers
-- OpenAPI response formatters
-- Pagination utilities
-- API response helpers
+Utility modules:
+- `constants/`: Application and error constants
+- `errors/`: Custom error handling classes
+- `helpers/`: Utility functions for common operations
+- `types/`: TypeScript type definitions
 
 ### `/src/middlewares`
 Hono middleware functions:
-- Error handling
-- Request logging
-- Authentication
-- Authorization
+- `error.middleware.ts`: Global error handling
+- `http-logging.middleware.ts`: HTTP Request logging
 
 ### `/src/schemas`
-Common validation schemas using Zod.
-
-### `/src/types`
-TypeScript type definitions and interfaces.
-
-## Development Guidelines
-
-1. **Code Organization**
-   - Follow modular approach
-   - Keep related files together
-   - Use appropriate naming conventions
-
-2. **TypeScript**
-   - Maintain strict type safety
-   - Define interfaces for data structures
-   - Use type guards where necessary
-
-3. **API Design**
-   - Follow RESTful principles
-   - Implement proper validation
-   - Use consistent error handling
-   - Document with OpenAPI/Swagger
-
-4. **Database**
-   - Use migrations for schema changes
-   - Write clean and efficient queries
-   - Implement proper indexing
-
-5. **Error Handling**
-   - Use custom error classes
-   - Implement global error handling
-   - Provide meaningful error messages
+Shared validation schemas using Zod:
+- `common.schema.ts`: Common validation rules
 
 ## Getting Started
 
@@ -173,14 +167,12 @@ bun run dev
 - `bun run dev` - Start development server
 - `bun run build` - Build for production
 - `bun run start` - Start production server
-- `bun run db:generate` - Run database generate
-- `bun run db:push` - Run database push
-- `bun run db:migrate` - Run database migrations
-- `bun run db:seed:user` - Seed database with initial data
+- `bun run db:generate` - Generate database migrations
+- `bun run db:push` - Push database changes
+- `bun run db:migrate` - Run migrations
+- `bun run db:seed:user` - Seed user data
 
 ### Database Seeder Usage
-
-The `db:seed:user` command is used to populate the database with fake user data. You can specify the number of users you want to generate.
 
 ```bash
 # Generate default number of users (100)
@@ -194,8 +186,8 @@ bun run db:seed:user 1000000
 
 # Show help and usage information
 bun run db:seed:user --help
-
 ```
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.

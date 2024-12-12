@@ -2,7 +2,6 @@ import { userSchemaRoute } from './user.schema';
 import { responseJson } from '../../utils/helpers/response.helper';
 import { userService } from './user.service';
 import { app } from '../../config/app.config';
-import { MetaSchemaWithPagination } from '../../utils/types/response.type';
 
 app.openapi(userSchemaRoute.create, async (c) => {
   const body = c.req.valid('json')
