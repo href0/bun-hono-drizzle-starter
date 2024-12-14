@@ -2,11 +2,17 @@
 import { swaggerUI } from '@hono/swagger-ui';
 import { errorHandler } from './middlewares/error.middleware';
 import { logger } from 'hono/logger'
-import apiRoute from './modules/index'
+import apiRoute from './routes/index'
 import { cors } from 'hono/cors'
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { httpLogging } from './middlewares/http-logging.middleware';
-const app = new OpenAPIHono()
+import { JwtVariables } from 'hono/jwt';
+import { authMiddleware } from './middlewares/auth.middleware';
+import { roleMiddleware } from './middlewares/role.middleware';
+import authHandler from './modules/auth/auth.handler';
+
+type Variables = JwtVariables
+const app = new OpenAPIHono<{ Variables: Variables }>()
 
 app.use(logger(httpLogging))
 app.get('/', (c) => {
@@ -24,15 +30,17 @@ app.doc('/doc', {
       name: 'Users',
       description: 'User management endpoints',
     },
-    // {
-    //   name: 'Auth',
-    //   description: 'Authentication endpoints'
-    // }
+    {
+      name: 'Auth',
+      description: 'Authentication endpoints'
+    }
   ],
 })
 
 app.get('/swagger-doc', swaggerUI({ url: '/doc' }))
 app.use('/api/*', cors())
+app.route('/api/auth', authHandler)
+app.use('/api/*', authMiddleware, roleMiddleware)
 app.route('/api', apiRoute)
 app.onError(errorHandler)
 

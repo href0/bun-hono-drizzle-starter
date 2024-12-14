@@ -1,8 +1,7 @@
 import { OpenAPIHono } from '@hono/zod-openapi'
-import userRoute from './user/user.handler'
+import userHandler from '../modules/user/user.handler'
 
 const app = new OpenAPIHono()
-
-app.route('/user', userRoute)
+app.route('/user', userHandler)
 
 export default app

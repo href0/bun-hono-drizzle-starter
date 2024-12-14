@@ -44,7 +44,7 @@ const getSeedCount = () => {
 const generateUser = () => {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
-  const password = '$2b$10$Vt4XcGWtbgZnaTx8EWhnHO9DqnYKNt3aBJig1ZXp4DxTNgNzPAM6G';
+  const password = '$argon2id$v=19$m=65536,t=2,p=1$3B5JZdrK1J/jE57LqTC73jG0CEioz9ZeiRWOgJn6hWc$Gni9MeVIZzgyTF8edm4t9VxKQW8uUZjtLcG+Dp92GWQ'; // password
   
   return {
     name: `${firstName} ${lastName}`,

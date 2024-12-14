@@ -24,3 +24,8 @@ export class DatabaseError extends AppError {
     super(500, 'Database Error', errors);
   }
 }
+export class UnauthorizedError extends AppError {
+  constructor(errors: unknown) {
+    super(401, 'Unauthorized', errors);
+  }
+}

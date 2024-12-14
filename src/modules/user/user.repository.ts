@@ -7,6 +7,7 @@ import { hashPassword } from '../../utils/helpers/common.helper'
 
 export class UserRepository {
   async create(data: InsertUser): Promise<User> {
+    data.password = await hashPassword(data.password)
     const [user] = await db.insert(usersTable).values(data).returning()
     return user
   }

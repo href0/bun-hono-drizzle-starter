@@ -4,8 +4,8 @@ import { ErrorResponse } from '../utils/types/error.type';
 import { AppError } from '../utils/errors/base.error';
 import { env } from 'hono/adapter'
 import { API_VERSION } from '../utils/constants/app.constant';
-import { ZodError } from 'zod';
 import { logger } from '../config/logger.config';
+import { JwtTokenExpired, JwtTokenInvalid, JwtTokenIssuedAt, JwtTokenNotBefore } from 'hono/utils/jwt/types';
 
 export const errorHandler = (error : Error, c : Context) => {
    // Handle unknown errors
@@ -22,11 +22,28 @@ export const errorHandler = (error : Error, c : Context) => {
   if (error instanceof AppError) {
     statusCode = error.statusCode
     response.message = error.message
-    response.errors = error.errors
-  } else if (error instanceof ZodError) {
-    console.log('aaaa zod')
+    response.errors = statusCode !== 500 ? error.errors : null
+  } else if (error instanceof JwtTokenInvalid) {
+    statusCode = 401;
+    response.message = 'Unauthorized'
+    response.errors = "Invalid authentication token provided";
   }
-
+  else if (error instanceof JwtTokenNotBefore) {
+    statusCode = 401;
+    response.message = 'Unauthorized'
+    response.errors = "Token cannot be used yet - check token's NBF (Not Before) date";
+  }
+  else if (error instanceof JwtTokenExpired) {
+    statusCode = 401;
+    response.message = 'Unauthorized'
+    response.errors = "Authentication token has expired. Please log in again";
+  }
+  else if (error instanceof JwtTokenIssuedAt) {
+    statusCode = 401;
+    response.message = 'Unauthorized'
+    response.errors = "Token has an invalid issued date (IAT claim)";
+  } 
+  
   // Add stack trace in development
   const { NODE_ENV } = env<{ NODE_ENV: string }>(c)
   if (NODE_ENV === 'development') {

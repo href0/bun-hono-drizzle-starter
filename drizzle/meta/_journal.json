@@ -22,6 +22,13 @@
       "when": 1733909800282,
       "tag": "0002_shiny_proudstar",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1734115175603,
+      "tag": "0003_motionless_robbie_robertson",
+      "breakpoints": true
     }
   ]
 }

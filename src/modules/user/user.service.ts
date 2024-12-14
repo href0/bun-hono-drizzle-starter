@@ -1,23 +1,15 @@
-import { db } from "../../config/db.config"
 import { usersTable } from "../../models/user.model"
 import { InsertUser, SelectUser, UpdateUser, UserQuerySchema } from "./user.type"
 import { dynamicQueryWithPagination, PaginatedResult } from "../../utils/helpers/pagination.helper";
 import { and, desc, ilike, SQL } from "drizzle-orm";
 import { NotFoundError } from "../../utils/errors/http.error";
-import { hashPassword } from "../../utils/helpers/common.helper";
 import { USER_SELECT } from "../../utils/constants/select.constant";
 import { userRepository } from "./user.repository";
 
 class UserServie {
   public async create(request: InsertUser): Promise<SelectUser> {
-    request.password = await hashPassword(request.password)
-
-    const newUser = await db
-    .insert(usersTable)
-    .values(request)
-    .returning(USER_SELECT)
-
-    return newUser[0]
+    const newUser = await userRepository.create(request)
+    return newUser
   }
   
   public async findAll(querySchema: UserQuerySchema): Promise<PaginatedResult<SelectUser>> {
