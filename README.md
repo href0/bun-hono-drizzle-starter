@@ -12,12 +12,18 @@ This repository serves as a starter project to streamline the development proces
 Save hours of initial setup time with a pre-configured project that includes:
 
 - 🚀 **Modern Stack**: Built with Bun + Hono + Drizzle
-- 📚 **API Documentation**: Ready-to-use OpenAPI/Swagger documentation (available at `/swagger-doc`)
-- 📊 **Pagination**: Built-in query pagination system for handling large datasets
+- 📚 **API Documentation**: Auto-generated OpenAPI/Swagger documentation powered by OpenAPIHono and Zod schemas. Each route's request/response validation is automatically reflected in the Swagger UI (available at `/swagger-ui`)
+- 📊 **Smart Pagination**:: Built with Features include:
+  - Dynamic column selection and filtering
+  - Flexible ordering with custom column support
+  - Type-safe pagination metadata using Drizzle's type inference
+  - Default configuration with customizable page size and number
+  - Efficient parallel query execution for data and count
 - 📘 **TypeScript**: Full TypeScript support for enhanced type safety and developer experience
 - 🗄️ **Database**: PostgreSQL database with Drizzle ORM for migrations and queries
 - 🔐 **Authentication**: Pre-configured authentication structure with JWT support
 - ✅ **Validation**: Request validation using Zod
+- 📝 **Logging**: Comprehensive request logging system
 - 🌱 **Seeding**: Flexible data seeding system for development and testing
   - Configurable record generation
   - Support for large datasets
