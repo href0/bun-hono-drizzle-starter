@@ -50,7 +50,7 @@ authHandler.openapi(authRoute.signIn, async(c) => {
     accessToken : accessToken 
   }
   await userService.updateRefreshToken(user.id, refreshToken)
-  deleteCookie(c, 'refreshToken')
+  deleteCookie(c, 'refreshToken', cookieOptions())
   setCookie(c, 'refreshToken', refreshToken, cookieOptions())
   return responseJson.OK(c, result)
 })
@@ -95,7 +95,7 @@ authHandler.openapi(authRoute.refreshToken, async(c) => {
     accessToken : accessToken
   }
   await userService.updateRefreshToken(user.id, refreshToken)
-  deleteCookie(c, 'refreshToken')
+  deleteCookie(c, 'refreshToken', cookieOptions())
   setCookie(c, 'refreshToken', newRefreshToken, cookieOptions())
   return responseJson.OK(c, result, 'Token refreshed successfully')
 })
