@@ -57,7 +57,8 @@ export class OpenAPIResponseHelper {
    * Create success response schema for single item
    */
   static createSuccessResponse<T extends z.ZodType>(dataSchema: T | null, description : string = 'Successful response') {
-    const responseSchema = successResponseSchema(dataSchema)
+
+    const responseSchema = successResponseSchema(dataSchema, description)
     return {
       200: {
         content: {
@@ -85,7 +86,7 @@ export class OpenAPIResponseHelper {
   }
 
   static createCreatedResponse<T extends z.ZodType>(dataSchema: T, description : string = 'Created successfully') {
-    const responseSchema = successResponseSchema(dataSchema)
+    const responseSchema = successResponseSchema(dataSchema, description)
     return {
       201: {
         content: {
@@ -100,7 +101,7 @@ export class OpenAPIResponseHelper {
   }
 
   static createCustomResponse<T extends z.ZodType>(dataSchema: T) {
-    const responseSchema = successResponseSchema(dataSchema)
+    const responseSchema = successResponseSchema(dataSchema, 'success')
     return {
       200: {
         content: {

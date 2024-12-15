@@ -46,6 +46,12 @@ class UserServie {
     return result
   }
 
+  public async findOneByEmail(email: string): Promise<SelectUser> {
+    const result = await userRepository.findByEmail(email)
+    if(!result) throw new NotFoundError('User Not Found')
+    return result
+  }
+
   public async update(id: number, request: UpdateUser): Promise<SelectUser> {
     const result = await userRepository.findById(id)
     if(!result) throw new NotFoundError('User Not Found')
@@ -63,6 +69,11 @@ class UserServie {
     if(!user) throw new NotFoundError('User Not Found')
     const updated = await userRepository.updatePassword(id, password)
     return updated
+  }
+  public async updateRefreshToken(id: number, refreshToken: string): Promise<void> {
+    const user = await userRepository.findById(id)
+    if(!user) throw new NotFoundError('User Not Found')
+    await userRepository.updateRefreshToken(id, refreshToken)
   }
 
   public async remove(id: number): Promise<void> {

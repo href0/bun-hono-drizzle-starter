@@ -5,6 +5,7 @@ import { logger } from "./logger.config";
 import { ERROR_MESSAGES } from "../utils/constants/error.constant";
 import { Context } from "hono";
 import { ZodError } from "zod";
+import { NodeEnv } from "../utils/interfaces/env.interface";
 
 export const defaultHookConfig = () => {
   return (result: { success: boolean, error?: ZodError }, c: Context) => {
@@ -14,7 +15,7 @@ export const defaultHookConfig = () => {
       logger.error(ERROR_MESSAGES.VALIDATION_ERROR, {
         level: 'error',
         errors: result.error?.issues,
-        stack: NODE_ENV === 'development' ? JSON.stringify(result.error) : null
+        stack: NODE_ENV === NodeEnv.DEV ? JSON.stringify(result.error) : null
       })
 
       const response: ResponseError = {
@@ -26,7 +27,7 @@ export const defaultHookConfig = () => {
         }
       }
 
-      if (NODE_ENV === 'development') {
+      if (NODE_ENV === NodeEnv.DEV) {
         response.stack = result.error?.toString()
       }
 

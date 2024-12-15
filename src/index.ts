@@ -6,13 +6,11 @@ import apiRoute from './routes/index'
 import { cors } from 'hono/cors'
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { httpLogging } from './middlewares/http-logging.middleware';
-import { JwtVariables } from 'hono/jwt';
 import { authMiddleware } from './middlewares/auth.middleware';
 import { roleMiddleware } from './middlewares/role.middleware';
 import authHandler from './modules/auth/auth.handler';
 
-type Variables = JwtVariables
-const app = new OpenAPIHono<{ Variables: Variables }>()
+const app = new OpenAPIHono()
 
 app.use(logger(httpLogging))
 app.get('/', (c) => {

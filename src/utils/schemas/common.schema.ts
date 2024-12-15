@@ -25,17 +25,17 @@ export const metaSchemaWithPagination = z.object({
   pagination: paginationSchema.optional(),
 })
 
-export const successResponseSchema = <T extends z.ZodType>(dataSchema: T | null = null, metaSchemaType: z.ZodType = metaSchema) => {
+export const successResponseSchema = <T extends z.ZodType>(dataSchema: T | null = null, message: string = 'success', metaSchemaType: z.ZodType = metaSchema) => {
   return z.object({
-    message: z.string().openapi({ example: "success" }),
-    data: dataSchema || z.null(),
+    message: z.string().openapi({ example: message }),
+    data: dataSchema ?? z.null(),
     meta: metaSchemaType,
   })
 }
 
 
 export const successResponseWithPaginationSchema = <T extends z.ZodType>(dataSchema: T) => {
-  return successResponseSchema(dataSchema, metaSchemaWithPagination)
+  return successResponseSchema(dataSchema, 'success', metaSchemaWithPagination)
 }
 
 export const errorResponseSchema = z.object({

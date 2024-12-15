@@ -2,6 +2,7 @@
 import { createLogger, format, transports } from 'winston';
 const { combine, timestamp, printf } = format;
 import 'winston-daily-rotate-file'
+import { NodeEnv } from '../utils/interfaces/env.interface';
 
 // Format log custom
 const logFormat = printf(({ level, message, timestamp, sql, params, duration, errors, stack }) => {
@@ -43,6 +44,6 @@ export const logger = createLogger({
   ]
 });
 
-if (Bun.env.NODE_ENV !== 'production') {
+if (Bun.env.NODE_ENV !== NodeEnv.PROD) {
   logger.add(new transports.Console());
 }

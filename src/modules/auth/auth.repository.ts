@@ -5,7 +5,7 @@ import { hashPassword } from '../../utils/helpers/common.helper'
 import { SelectUser } from '../user/user.type'
 import { SignUpAuthSchema } from './auth.type'
 
-export class AuthRepository {
+class AuthRepository {
   async signUp(data: SignUpAuthSchema): Promise<SelectUser> {
     data.password = await hashPassword(data.password)
     const [user] = await db.insert(usersTable).values(data).returning(USER_SELECT)
@@ -18,5 +18,4 @@ export class AuthRepository {
   // }
 }
 
-// Export singleton instance
 export const authRepository = new AuthRepository()

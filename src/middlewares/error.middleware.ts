@@ -6,6 +6,7 @@ import { env } from 'hono/adapter'
 import { API_VERSION } from '../utils/constants/app.constant';
 import { logger } from '../config/logger.config';
 import { JwtTokenExpired, JwtTokenInvalid, JwtTokenIssuedAt, JwtTokenNotBefore } from 'hono/utils/jwt/types';
+import { NodeEnv } from '../utils/interfaces/env.interface';
 
 export const errorHandler = (error : Error, c : Context) => {
    // Handle unknown errors
@@ -36,7 +37,7 @@ export const errorHandler = (error : Error, c : Context) => {
   else if (error instanceof JwtTokenExpired) {
     statusCode = 401;
     response.message = 'Unauthorized'
-    response.errors = "Authentication token has expired. Please log in again";
+    response.errors = "Authentication token has expired. Please sign in again";
   }
   else if (error instanceof JwtTokenIssuedAt) {
     statusCode = 401;
@@ -46,9 +47,9 @@ export const errorHandler = (error : Error, c : Context) => {
   
   // Add stack trace in development
   const { NODE_ENV } = env<{ NODE_ENV: string }>(c)
-  if (NODE_ENV === 'development') {
+  if (NODE_ENV === NodeEnv.DEV) {
     response.stack = error.stack;
   }
-  logger.error(response.message, {level : 'error', errors : response.errors, stack : NODE_ENV === 'development' ? error.stack : null})
+  logger.error(response.message, {level : 'error', errors : response.errors, stack : NODE_ENV === NodeEnv.DEV ? error.stack : null})
   return c.json(response, statusCode);
 };

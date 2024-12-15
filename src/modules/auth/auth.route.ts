@@ -17,7 +17,7 @@ class AuthRoute {
         }
       }
     },
-    responses:OpenAPIResponseHelper.createSuccessResponse(responseUserSchema, 'Get all user with pagination')
+    responses:OpenAPIResponseHelper.createSuccessResponse(responseUserSchema, 'Sign up success')
   })
 
   public readonly signIn = createRoute({
@@ -33,7 +33,14 @@ class AuthRoute {
         }
       }
     },
-    responses:OpenAPIResponseHelper.createSuccessResponse(responseSignInAuthSchema, 'Get all user with pagination')
+    responses:OpenAPIResponseHelper.createSuccessResponse(responseSignInAuthSchema, 'Sign in success')
+  })
+
+  public readonly refreshToken = createRoute({
+    method: 'post',
+    path: '/refresh-token',
+    tags : ['Auth'],
+    responses:OpenAPIResponseHelper.createSuccessResponse(responseSignInAuthSchema, 'Token refreshed successfully')
   })
 }
 

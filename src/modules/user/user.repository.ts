@@ -5,24 +5,24 @@ import { InsertUser, SelectUser, User } from './user.type'
 import { USER_SELECT } from '../../utils/constants/select.constant'
 import { hashPassword } from '../../utils/helpers/common.helper'
 
-export class UserRepository {
-  async create(data: InsertUser): Promise<User> {
+class UserRepository {
+  public async create(data: InsertUser): Promise<SelectUser> {
     data.password = await hashPassword(data.password)
-    const [user] = await db.insert(usersTable).values(data).returning()
+    const [user] = await db.insert(usersTable).values(data).returning(USER_SELECT)
     return user
   }
 
-  async findById(id: number): Promise<User | undefined> {
-    const [user] = await db.select().from(usersTable).where(eq(usersTable.id, id))
+  public async findById(id: number): Promise<SelectUser | null> {
+    const [user] = await db.select(USER_SELECT).from(usersTable).where(eq(usersTable.id, id))
     return user
   }
 
-  async findByEmail(email: string): Promise<User | undefined> {
-    const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email))
+  public async findByEmail(email: string): Promise<SelectUser | null> {
+    const [user] = await db.select(USER_SELECT).from(usersTable).where(eq(usersTable.email, email))
     return user
   }
 
-  async update(id: number, data: Partial<InsertUser>): Promise<SelectUser> {
+  public async update(id: number, data: Partial<InsertUser>): Promise<SelectUser> {
     const [user] = await db
       .update(usersTable)
       .set(data)
@@ -31,7 +31,7 @@ export class UserRepository {
     return user
   }
 
-  async updatePassword(id: number, password: string): Promise<SelectUser> {
+  public async updatePassword(id: number, password: string): Promise<SelectUser> {
     const hashedPassword = await hashPassword(password)
     const [user] = await db
       .update(usersTable)
@@ -39,6 +39,13 @@ export class UserRepository {
       .where(eq(usersTable.id, id))
       .returning(USER_SELECT)
     return user
+  }
+
+  public async updateRefreshToken(id: number, refreshToken: string): Promise<void> {
+    await db
+      .update(usersTable)
+      .set({ refreshToken : refreshToken })
+      .where(eq(usersTable.id, id))
   }
 
   async delete(id: number): Promise<void> {
@@ -54,5 +61,4 @@ export class UserRepository {
   }
 }
 
-// Export singleton instance
 export const userRepository = new UserRepository()
