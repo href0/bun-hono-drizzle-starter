@@ -17,6 +17,6 @@ export const generateJWT = async(payload: JWTPayloadUser, type: TokenType = Toke
 export const verifyJWT = async(token: string, type: TokenType = TokenType.ACCESS) => {
   const secretKey = type === TokenType.REFRESH ? REFRESH_TOKEN_SECRET_KEY : ACCESS_TOKEN_SECRET_KEY
   if(!secretKey) throw new Error('Secret key required!')
-  const decodedPayload = await verify(token, "secretKey") as JWTPayloadUser
+  const decodedPayload = await verify(token, secretKey) as JWTPayloadUser
   return decodedPayload
 }
