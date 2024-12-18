@@ -9,8 +9,20 @@ import { httpLogging } from './middlewares/http-logging.middleware';
 import { authMiddleware } from './middlewares/auth.middleware';
 import { roleMiddleware } from './middlewares/role.middleware';
 import authHandler from './modules/auth/auth.handler';
-
 const app = new OpenAPIHono()
+
+// Cara yang benar untuk mengatur headers
+app.use('*', async (c, next) => {
+  c.header('x-forwarded-proto', 'https');
+  await next();
+});
+
+app.use('*', cors({
+  origin: '*', // atau domain spesifik Anda
+  allowMethods: ['POST', 'GET', 'OPTIONS'], // pastikan POST diizinkan
+  allowHeaders: ['Content-Type', 'Authorization'],
+  exposeHeaders: ['Content-Length']
+}));
 
 app.use(logger(httpLogging))
 app.get('/', (c) => {
@@ -36,7 +48,6 @@ app.doc('/doc', {
 })
 
 app.get('/swagger-doc', swaggerUI({ url: '/doc' }))
-app.use('/api/*', cors())
 app.route('/api/auth', authHandler)
 app.use('/api/*', authMiddleware, roleMiddleware)
 app.route('/api', apiRoute)
