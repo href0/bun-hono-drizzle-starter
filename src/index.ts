@@ -41,6 +41,7 @@ app.doc('/doc', {
       description: 'Authentication endpoints'
     }
   ],
+  
 })
 
 app.get('/swagger-doc', swaggerUI({ url: '/doc' }))

@@ -1,5 +1,5 @@
 import { z } from '@hono/zod-openapi'
-import { errorResponseSchema, successResponseSchema, successResponseWithPaginationSchema } from '../schemas/common.schema'
+import { successResponseSchema, successResponseWithPaginationSchema, errorResponseSchema } from '../schemas/response.schema'
 
 export class OpenAPIResponseHelper {
   private static readonly errorResponses = {

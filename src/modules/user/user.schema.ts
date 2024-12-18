@@ -1,5 +1,5 @@
 import { z } from '@hono/zod-openapi'
-import { queryPaginationSchema } from '../../utils/schemas/common.schema'
+import { queryPaginationSchema } from '../../utils/schemas/pagination.schema'
 
 export const responseUserSchema = z.object({
   id: z.number().openapi({ example : 1 }),

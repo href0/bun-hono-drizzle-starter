@@ -1,5 +1,7 @@
 import { z } from "zod";
-import { errorResponseSchema, metaSchema, metaSchemaWithPagination, paginationSchema, successResponseSchema, successResponseWithPaginationSchema } from "../schemas/common.schema";
+import { successResponseSchema, successResponseWithPaginationSchema } from "../schemas/response.schema";
+import { errorResponseSchema } from "../schemas/response.schema";
+import { metaSchema, metaSchemaWithPagination, paginationSchema } from "../schemas/pagination.schema";
 
 export type MetaSchema = z.infer<typeof metaSchema>
 export type MetaSchemaWithPagination = z.infer<typeof metaSchemaWithPagination>

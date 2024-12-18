@@ -1,12 +1,14 @@
-import { createRoute } from "@hono/zod-openapi"
+import { createRoute, z } from "@hono/zod-openapi"
 import { OpenAPIResponseHelper } from "../../utils/helpers/open-api-response.helper"
 import { createUserSchema, responseUserSchema, updatePasswordUserSchema, updateUserSchema, userParamSchema, userQuerySchema } from "./user.schema"
+import { securityBearerSchema } from "../../utils/schemas/security-bearer.schema"
 
 class UserRoute {
   public readonly findAll = createRoute({
     method: 'get',
     path: '/',
     tags : ['Users'],
+    security: securityBearerSchema,
     request : {
       query : userQuerySchema
     },
@@ -17,6 +19,7 @@ class UserRoute {
     method: 'get',
     path: '/{id}',
     tags : ['Users'],
+    security: securityBearerSchema,
     request: {
       params: userParamSchema,
     },
@@ -27,6 +30,7 @@ class UserRoute {
     method: 'post',
     path: '/',
     tags: ['Users'],
+    security: securityBearerSchema,
     request: {
       body: {
         content: {
@@ -43,6 +47,7 @@ class UserRoute {
     method: 'put',
     path: '/{id}',
     tags: ['Users'],
+    security: securityBearerSchema,
     request: {
       params : userParamSchema,
       body: {
@@ -60,6 +65,7 @@ class UserRoute {
     method: 'patch',
     path: '/{id}/password',
     tags: ['Users'],
+    security: securityBearerSchema,
     request: {
       params : userParamSchema,
       body: {
@@ -77,6 +83,7 @@ class UserRoute {
     method: 'delete',
     path: '/{id}',
     tags: ['Users'],
+    security: securityBearerSchema,
     request: {
       params: userParamSchema,
     },
