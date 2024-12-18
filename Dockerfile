@@ -12,6 +12,7 @@ RUN bun install --frozen-lockfile
 # Copy only necessary files for building
 COPY tsconfig*.json ./
 COPY drizzle.config.ts ./
+COPY drizzle ./drizzle
 COPY src ./src
 
 # Build the application
