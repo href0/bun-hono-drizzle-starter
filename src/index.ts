@@ -43,7 +43,7 @@ app.route('/api', apiRoute)
 app.onError(errorHandler)
 
 export default {  
-  port: Bun.env.PORT ?? 3000, 
+  port: Number(Bun.env.PORT) ?? 8888, 
   fetch: app.fetch,
-  hostname: "0.0.0.0",
+  hostname: "0.0.0.0"
 } 
