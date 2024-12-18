@@ -6,10 +6,6 @@ import { defaultHookConfig } from '../../config/app.config';
 
 const userHandler = new OpenAPIHono({ defaultHook: defaultHookConfig() })
 
-userHandler.openAPIRegistry.registerComponent('securitySchemes', 'Bearer', {
-  type : 'http',
-  scheme : 'bearer'
-})
 userHandler.openapi(userRoute.create, async (c) => {
   const body = c.req.valid('json')
   const result = await userService.create(body)

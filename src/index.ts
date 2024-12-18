@@ -9,11 +9,12 @@ import { httpLogging } from './middlewares/http-logging.middleware';
 import { authMiddleware } from './middlewares/auth.middleware';
 import { roleMiddleware } from './middlewares/role.middleware';
 import authHandler from './modules/auth/auth.handler';
-const app = new OpenAPIHono()
+
+const app = new OpenAPIHono();
 
 app.use('/api/*', cors({
-  origin: '*', // atau domain spesifik Anda
-  allowMethods: ['POST', 'GET', 'OPTIONS'], // pastikan POST diizinkan
+  origin: '*',
+  allowMethods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH'],
   allowHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header', 'Upgrade-Insecure-Requests'],
   exposeHeaders: ['Content-Length', 'X-Kuma-Revision'],
   maxAge: 600,
@@ -25,8 +26,8 @@ app.get('/', (c) => {
   return c.text('Welcome')
 })
 
-app.doc('/doc', {
-  openapi: '3.0.0',
+app.doc31('/doc', {
+  openapi: '3.1.0',
   info: {
     title: 'User Management API',
     version: 'v1'
