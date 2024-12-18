@@ -1,40 +1,36 @@
-# Base image
+# Build stage
 FROM oven/bun:1.0.29 AS builder
 
-# Set working directory
 WORKDIR /app
 
 # Copy package files
 COPY package.json bun.lockb ./
 
-# Install dependencies
-RUN bun install --frozen-lockfile --production
+# Install dependencies for building
+RUN bun install --frozen-lockfile
 
-# Copy source code
-COPY . .
+# Copy only necessary files for building
+COPY tsconfig*.json ./
+COPY drizzle.config.ts ./
+COPY src ./src
 
-# Build the application (if needed)
+# Build the application
 RUN bun run build
 
-# Production image
+# Production stage
 FROM oven/bun:1.0.29-slim
 
 WORKDIR /app
 
-# Copy only necessary files from builder
+# Copy only the necessary built files and configurations
 COPY --from=builder /app/package.json ./
+COPY --from=builder /app/bun.lockb ./
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/bun.lockb ./bun.lockb
-COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
 COPY --from=builder /app/drizzle ./drizzle
-COPY --from=builder /app/src/models ./src/models
-COPY --from=builder /app/src/config/db.config.ts ./src/config/db.config.ts
 
-# Install production dependencies
+# Install only production dependencies
 RUN bun install --frozen-lockfile --production
 
-# Expose port
-EXPOSE 3000
+EXPOSE 8888
 
-# Start the server
 CMD ["bun", "run", "start"]
