@@ -45,4 +45,5 @@ app.onError(errorHandler)
 export default {  
   port: Bun.env.PORT ?? 3000, 
   fetch: app.fetch,
+  hostname: "0.0.0.0",
 } 
