@@ -5,6 +5,7 @@ This repository serves as a starter project to streamline the development proces
 - **[Bun](https://bun.sh)** for a fast and modern JavaScript runtime.
 - **[Hono](https://honojs.dev)** as the lightweight web framework.
 - **[Drizzle ORM](https://orm.drizzle.team/)** for type-safe database operations.
+- **[Swagger](https://swagger.io/specification/)** OpenAPI Version 3.1.0.
 - TypeScript for type safety and development ease.
 
 ## Why Use This Starter?
@@ -12,7 +13,7 @@ This repository serves as a starter project to streamline the development proces
 Save hours of initial setup time with a pre-configured project that includes:
 
 - 🚀 **Modern Stack**: Built with Bun + Hono + Drizzle
-- 📚 **API Documentation**: Auto-generated OpenAPI/Swagger documentation powered by OpenAPIHono and Zod schemas. Each route's request/response validation is automatically reflected in the Swagger UI (available at `/swagger-ui`)
+- 📚 **API Documentation**: Auto-generated OpenAPI/Swagger documentation powered by OpenAPIHono and Zod schemas. Each route's request/response validation is automatically reflected in the Swagger UI (available at `/swagger-doc`)
 - 📊 **Smart Pagination**:: Built with Features include:
   - Dynamic column selection and filtering
   - Flexible ordering with custom column support
