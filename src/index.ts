@@ -11,17 +11,13 @@ import { roleMiddleware } from './middlewares/role.middleware';
 import authHandler from './modules/auth/auth.handler';
 const app = new OpenAPIHono()
 
-// Cara yang benar untuk mengatur headers
-app.use('*', async (c, next) => {
-  c.header('x-forwarded-proto', 'https');
-  await next();
-});
-
-app.use('*', cors({
+app.use('/api/*', cors({
   origin: '*', // atau domain spesifik Anda
   allowMethods: ['POST', 'GET', 'OPTIONS'], // pastikan POST diizinkan
-  allowHeaders: ['Content-Type', 'Authorization'],
-  exposeHeaders: ['Content-Length']
+  allowHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header', 'Upgrade-Insecure-Requests'],
+  exposeHeaders: ['Content-Length', 'X-Kuma-Revision'],
+  maxAge: 600,
+  credentials: true,
 }));
 
 app.use(logger(httpLogging))
