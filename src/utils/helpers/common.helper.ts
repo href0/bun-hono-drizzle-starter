@@ -13,7 +13,7 @@ export const cookieOptions = (): CookieOptions => {
     secure: isProduction,
     sameSite: !isProduction ? 'Lax' : 'None',
     path: '/api/auth',
-    domain: !isProduction ? 'localhost' : Bun.env.DOMAIN,
+    // domain: !isProduction ? 'localhost' : Bun.env.DOMAIN,
     maxAge: 30 * 24 * 60 * 60, // 30 days, note : must be same with REFRESH_TOKEN_EXPIRED,
   }
 }
