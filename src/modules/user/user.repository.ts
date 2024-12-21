@@ -4,9 +4,13 @@ import { db } from '../../config/db.config'
 import { InsertUser, SelectUser, User } from './user.type'
 import { USER_SELECT } from '../../utils/constants/select.constant'
 import { hashPassword } from '../../utils/helpers/common.helper'
+import { ConflictError } from '../../utils/errors/http.error'
+import { ERROR_MESSAGES } from '../../utils/constants/error.constant'
 
 class UserRepository {
   public async create(data: InsertUser): Promise<SelectUser> {
+    const isExists = await this.findByEmail(data.email)
+    if(isExists) throw new ConflictError(ERROR_MESSAGES.EMAIL_ALREADY_EXISTS)
     data.password = await hashPassword(data.password)
     const [user] = await db.insert(usersTable).values(data).returning(USER_SELECT)
     return user
