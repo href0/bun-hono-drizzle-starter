@@ -9,13 +9,19 @@ export class NotFoundError extends AppError {
 
 export class BadRequestError extends AppError {
   constructor(errors: unknown) {
-    super(400, 'Bad Request', errors);
+    super(400, ERROR_MESSAGES.BAD_REQUEST, errors);
+  }
+}
+
+export class ConflictError extends AppError {
+  constructor(errors: unknown) {
+    super(409, ERROR_MESSAGES.CONFLICT, errors);
   }
 }
 
 export class ValidationError extends AppError {
   constructor(errors: unknown) {
-    super(422, 'Validation Error', errors);
+    super(422, ERROR_MESSAGES.VALIDATION_ERROR, errors);
   }
 }
 
@@ -26,6 +32,6 @@ export class DatabaseError extends AppError {
 }
 export class UnauthorizedError extends AppError {
   constructor(errors: unknown) {
-    super(401, 'Unauthorized', errors);
+    super(401, ERROR_MESSAGES.UNAUTHORIZED, errors);
   }
 }
