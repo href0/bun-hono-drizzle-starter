@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm'
 import { usersTable } from '../../models/user.model'
 import { db } from '../../config/db.config'
-import { InsertUser, SelectUser, User } from './user.type'
+import { InsertUser, SelectUser } from './user.type'
 import { USER_SELECT } from '../../utils/constants/select.constant'
 import { hashPassword } from '../../utils/helpers/common.helper'
 import { ConflictError } from '../../utils/errors/http.error'
@@ -52,16 +52,8 @@ class UserRepository {
       .where(eq(usersTable.id, id))
   }
 
-  async delete(id: number): Promise<void> {
+  public async delete(id: number): Promise<void> {
     await db.delete(usersTable).where(eq(usersTable.id, id))
-  }
-
-  async list(limit: number, offset: number): Promise<User[]> {
-    return db
-      .select()
-      .from(usersTable)
-      .limit(limit)
-      .offset(offset)
   }
 }
 

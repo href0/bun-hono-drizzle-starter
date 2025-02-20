@@ -70,6 +70,7 @@ class UserServie {
     const updated = await userRepository.updatePassword(id, password)
     return updated
   }
+  
   public async updateRefreshToken(id: number, refreshToken: string): Promise<void> {
     const user = await userRepository.findById(id)
     if(!user) throw new NotFoundError('User Not Found')

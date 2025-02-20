@@ -18,6 +18,6 @@ pool.connect()
 export const db = drizzle({ client: pool, casing : 'snake_case', logger : {
   logQuery(query: string, params: any[]): void {
     params = params.map(param => param.toString().includes('argon') ? 'SECRET' : param)
-    logger.info('EXECUTE QUERY',{sql : query, params: params})
+    Bun.env.NODE_ENV !== 'test' && logger.info('EXECUTE QUERY',{sql : query, params: params})
   },
 }});
