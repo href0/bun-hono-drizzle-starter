@@ -6,6 +6,7 @@ import { USER_SELECT } from '../../utils/constants/select.constant'
 import { hashPassword } from '../../utils/helpers/common.helper'
 import { ConflictError } from '../../utils/errors/http.error'
 import { ERROR_MESSAGES } from '../../utils/constants/error.constant'
+import { rolesTable } from '../../models/role.model'
 
 class UserRepository {
   public async create(data: InsertUser): Promise<SelectUser> {
@@ -17,7 +18,9 @@ class UserRepository {
   }
 
   public async findById(id: number): Promise<SelectUser | null> {
-    const [user] = await db.select(USER_SELECT).from(usersTable).where(eq(usersTable.id, id))
+    const [user] = await db.select(USER_SELECT)
+                      .from(usersTable)
+                      .where(eq(usersTable.id, id))
     return user
   }
 

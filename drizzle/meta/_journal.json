@@ -5,36 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1733905945211,
-      "tag": "0000_far_grandmaster",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1733906210285,
-      "tag": "0001_calm_abomination",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1733909800282,
-      "tag": "0002_shiny_proudstar",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1734115175603,
-      "tag": "0003_motionless_robbie_robertson",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1734267035356,
-      "tag": "0004_lame_prowler",
+      "when": 1740137834982,
+      "tag": "0000_warm_firelord",
       "breakpoints": true
     }
   ]
