@@ -7,6 +7,7 @@ import { API_VERSION } from '../utils/constants/app.constant';
 import { logger } from '../config/logger.config';
 import { JwtTokenExpired, JwtTokenInvalid, JwtTokenIssuedAt, JwtTokenNotBefore } from 'hono/utils/jwt/types';
 import { NodeEnv } from '../utils/interfaces/env.interface';
+import { ERROR_MESSAGES } from '../utils/constants/error.constant';
 
 export const errorHandler = (error : Error, c : Context) => {
    // Handle unknown errors
@@ -26,22 +27,22 @@ export const errorHandler = (error : Error, c : Context) => {
     response.errors = statusCode !== 500 ? error.errors : null
   } else if (error instanceof JwtTokenInvalid) {
     statusCode = 401;
-    response.message = 'Unauthorized'
+    response.message = ERROR_MESSAGES.UNAUTHORIZED
     response.errors = "Invalid authentication token provided";
   }
   else if (error instanceof JwtTokenNotBefore) {
     statusCode = 401;
-    response.message = 'Unauthorized'
+    response.message = ERROR_MESSAGES.TOKEN_EXPIRED
     response.errors = "Token cannot be used yet - check token's NBF (Not Before) date";
   }
   else if (error instanceof JwtTokenExpired) {
     statusCode = 401;
-    response.message = 'Unauthorized'
+    response.message = ERROR_MESSAGES.TOKEN_EXPIRED
     response.errors = "Authentication token has expired. Please sign in again";
   }
   else if (error instanceof JwtTokenIssuedAt) {
     statusCode = 401;
-    response.message = 'Unauthorized'
+    response.message = ERROR_MESSAGES.TOKEN_EXPIRED
     response.errors = "Token has an invalid issued date (IAT claim)";
   } 
   

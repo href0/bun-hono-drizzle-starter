@@ -47,6 +47,10 @@ app.doc31('/doc', {
       name: 'Users',
       description: 'Users management endpoints',
     },
+    {
+      name: 'Roles',
+      description: 'Roles management endpoints',
+    },
   ],
 })
 

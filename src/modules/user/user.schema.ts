@@ -13,12 +13,13 @@ export const createUserSchema = z.object({
   email: z.string().email().openapi({ example : "john@gmail.com" }),
   name: z.string().min(5).openapi({ example : "john doe" }),
   password: z.string().min(6).openapi({ example : "password" }),
-}).openapi('Create')
+  roleId: z.number().optional().openapi({ example : 2 }),
+}).openapi('Create User')
 
 export const updateUserSchema = z.object({
   email: z.string().email().openapi({ example : "john@gmail.com" }),
   name: z.string().min(5).openapi({ example : "john doe" }),
-}).openapi('Update')
+}).openapi('Update User')
 
 export const updatePasswordUserSchema = z.object({
   password: z.string().min(6).openapi({ example : "password" }),
