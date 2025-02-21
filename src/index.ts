@@ -29,20 +29,25 @@ app.get('/', (c) => {
 app.doc31('/doc', {
   openapi: '3.1.0',
   info: {
-    title: 'User Management API',
-    version: 'v1'
+    title: 'Role Base Access Control (RBAC) Management API',
+    version: 'v1',
+    description: 'This is a simple API for Role Base Access Control (RBAC) management',
+    license: { name: "by Anzeru HREF", url: "https://github.com/href0/" },
+    contact: {email: "href.dev@gmail.com", name: "Anzeru HREF", url: "https://github.com/href0/"},
   },
+  servers: [
+    { url: 'http://localhost:8888', description: 'Local server' },
+  ],
   tags: [
     {
-      name: 'Users',
-      description: 'User management endpoints',
+      name: 'Auth',
+      description: 'Authentication management endpoints'
     },
     {
-      name: 'Auth',
-      description: 'Authentication endpoints'
-    }
+      name: 'Users',
+      description: 'Users management endpoints',
+    },
   ],
-  
 })
 
 app.get('/swagger-doc', swaggerUI({ url: '/doc' }))
