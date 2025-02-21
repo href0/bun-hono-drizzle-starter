@@ -6,7 +6,7 @@ import { userService } from "../user/user.service";
 import { db } from "../../config/db.config";
 import { usersTable } from "../../models/user.model";
 import { eq } from "drizzle-orm";
-import { BadRequestError, NotFoundError, UnauthorizedError } from "../../utils/errors/http.error";
+import { BadRequestError, NotFoundError, TokenExpiredError, UnauthorizedError } from "../../utils/errors/http.error";
 import { generateJWT, TokenType, verifyJWT } from "../../utils/helpers/jwt.helper";
 import { ResponseSignInAuthSchema } from "./auth.type";
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie'
@@ -57,7 +57,7 @@ authHandler.openapi(authRoute.signIn, async(c) => {
 
 authHandler.openapi(authRoute.refreshToken, async(c) => {
   const refreshToken = getCookie(c, 'refreshToken')
-  if(!refreshToken) throw new UnauthorizedError('Already sign out, please sign in again')
+  if(!refreshToken) throw new TokenExpiredError('Already sign out, please sign in again')
 
   const decoded = await verifyJWT(refreshToken, TokenType.REFRESH)
   

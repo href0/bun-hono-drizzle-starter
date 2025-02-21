@@ -35,3 +35,8 @@ export class UnauthorizedError extends AppError {
     super(401, ERROR_MESSAGES.UNAUTHORIZED, errors);
   }
 }
+export class TokenExpiredError extends AppError {
+  constructor(errors: unknown) {
+    super(401, ERROR_MESSAGES.TOKEN_EXPIRED, errors);
+  }
+}
