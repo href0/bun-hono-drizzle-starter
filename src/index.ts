@@ -13,7 +13,10 @@ import authHandler from './modules/auth/auth.handler';
 const app = new OpenAPIHono();
 
 app.use('/api/*', cors({
-  origin: '*',
+  origin: (origin) => {
+    const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000'];
+    return allowedOrigins.includes(origin) ? origin : '';
+  },
   allowMethods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH'],
   allowHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header', 'Upgrade-Insecure-Requests'],
   exposeHeaders: ['Content-Length', 'X-Kuma-Revision'],
