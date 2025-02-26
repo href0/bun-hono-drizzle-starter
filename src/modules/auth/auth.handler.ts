@@ -94,7 +94,7 @@ authHandler.openapi(authRoute.refreshToken, async(c) => {
     updatedAt : user?.updatedAt,
     accessToken : accessToken
   }
-  await userService.updateRefreshToken(user.id, refreshToken)
+  await userService.updateRefreshToken(user.id, newRefreshToken)
   deleteCookie(c, 'refreshToken', cookieOptions())
   setCookie(c, 'refreshToken', newRefreshToken, cookieOptions())
   return responseJson.OK(c, result, 'Token refreshed successfully')
