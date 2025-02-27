@@ -44,6 +44,10 @@ export class UserTestUtil {
     this._id = id
   }
 
+  public static getId(): number | null {
+    return this._id
+  }
+
   private static clearId(): void {
     if(this._id !== null){
       this._id = null
