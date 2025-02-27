@@ -16,7 +16,7 @@ export const createUserSchema = z.object({
 }).openapi('Create')
 
 export const updateUserSchema = z.object({
-  email: z.string().email().openapi({ example : "john@gmail.com" }),
+  email: z.string().email().optional().openapi({ example : "john@gmail.com" }),
   name: z.string().min(5).openapi({ example : "john doe" }),
 }).openapi('Update')
 

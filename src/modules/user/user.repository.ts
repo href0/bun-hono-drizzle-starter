@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { eq, SQL } from 'drizzle-orm'
 import { usersTable } from '../../models/user.model'
 import { db } from '../../config/db.config'
 import { InsertUser, SelectUser } from './user.type'
@@ -27,12 +27,11 @@ class UserRepository {
   }
 
   public async update(id: number, data: Partial<InsertUser>): Promise<SelectUser> {
-    const [user] = await db
-      .update(usersTable)
-      .set(data)
-      .where(eq(usersTable.id, id))
-      .returning(USER_SELECT)
-    return user
+    return this._updateWhere(eq(usersTable.id, id), data)
+  }
+  
+  public async updateByEmail(email: string, data: Partial<InsertUser>): Promise<SelectUser> {
+    return this._updateWhere(eq(usersTable.email, email), data)
   }
 
   public async updatePassword(id: number, password: string): Promise<SelectUser> {
@@ -54,6 +53,26 @@ class UserRepository {
 
   public async delete(id: number): Promise<void> {
     await db.delete(usersTable).where(eq(usersTable.id, id))
+    await this._deleteWhere(eq(usersTable.id, id))
+  }
+
+  public async deleteByEmail(email: string): Promise<void> {
+    await this._deleteWhere(eq(usersTable.email, email))
+  }
+
+  private async _updateWhere(condition: SQL, data: Partial<InsertUser>): Promise<SelectUser> {
+    const [user] = await db
+      .update(usersTable)
+      .set(data)
+      .where(condition)
+      .returning(USER_SELECT)
+    return user
+  }
+
+  private async _deleteWhere(condition: SQL): Promise<void> {
+    await db
+      .delete(usersTable)
+      .where(condition)
   }
 }
 
