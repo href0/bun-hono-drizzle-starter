@@ -1,41 +1,32 @@
-import { describe, expect, it, beforeAll } from "bun:test";
+import { describe, expect, it, beforeAll, afterAll } from "bun:test";
 import { userService } from "./user.service";
 import { ConflictError, NotFoundError } from "../../utils/errors/http.error";
-import { InsertUser, SelectUser, UpdateUser, UserQuerySchema } from "./user.type";
+import { SelectUser, UserQuerySchema } from "./user.type";
+import { UserTestUtil } from "../../utils/tests/user-test.util";
 
-const mockUser: InsertUser = {
-  email: "test@example.com",
-  name: "Test User",
-  password: "password123",
-};
-
+const mockUser = UserTestUtil.getMockUser()
 let user: SelectUser | null = null 
 
 describe("UserService", () => {
   beforeAll(async () => {
-    try {
-      const existingUser = await userService.findOneByEmail(mockUser.email);
-      if (existingUser)   await userService.remove(existingUser.id);
-    } catch (error) {
-      if (!(error instanceof NotFoundError)) {
-        console.log('Error in beforeAll', error);
-        process.exit(1);
-      }
-    }
+    await userService.removeByEmail(mockUser.email)
   });
+
+  afterAll(async ()=>{
+    await UserTestUtil.remove()
+  })
 
   describe("create", () => {
     it("should create a new user", async () => {
-      user = await userService.create(mockUser);
+      user = await UserTestUtil.create()
       expect(user.email).toEqual(mockUser.email);
       expect(user.name).toEqual(mockUser.name);
     });
 
     it("should error already exists", async () => {         
-      expect(userService.create(mockUser))
+      expect(UserTestUtil.create())
       .rejects.toThrow(ConflictError);
     });
-
   });
 
   describe("findAll", () => {
@@ -71,25 +62,21 @@ describe("UserService", () => {
 
   describe("update", () => {
     it("should update created user", async () => {   
-      const updateUser = await userService.update(Number(user?.id), {
-        email: mockUser.email,
-        name: "Updated User",
-      })
-      expect(updateUser.name).toEqual("Updated User");
+      const updateUser = await UserTestUtil.update()
+      expect(updateUser.name).toEqual(UserTestUtil.getMockUpdateUser().name);
     });
-
   });
 
   describe("updatePassword", () => {
     it("should update password created user", async () => {   
       const updateUser = await userService.updatePassword(Number(user?.id), "newpassword123");
-      expect(updateUser.name).toEqual("Updated User");
+      expect(updateUser.id).toEqual(user?.id!);
     });
   });
 
   describe("remove", () => {
     it("should delete test user", async () => {
-      const remove = await userService.remove(Number(user?.id));
+      const remove = await UserTestUtil.remove();
       expect(remove).toEqual(undefined);
     });
 

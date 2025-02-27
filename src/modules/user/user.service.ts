@@ -64,6 +64,17 @@ class UserServie {
     return updated
   }
 
+  public async updateByEmail(email: string, request: UpdateUser): Promise<SelectUser> {
+    const result = await userRepository.findByEmail(email)
+    if(!result) throw new NotFoundError('User Not Found')
+    const valueToUpdate: UpdateUser = {
+      name : request.name,
+    }
+    const updated = await userRepository.updateByEmail(email, valueToUpdate)
+
+    return updated
+  }
+
   public async updatePassword(id: number, password: string): Promise<SelectUser> {
     const user = await userRepository.findById(id)
     if(!user) throw new NotFoundError('User Not Found')
@@ -79,6 +90,10 @@ class UserServie {
 
   public async remove(id: number): Promise<void> {
     await userRepository.delete(id)
+  }
+
+  public async removeByEmail(email: string): Promise<void> {
+    await userRepository.deleteByEmail(email)
   }
 }
 
