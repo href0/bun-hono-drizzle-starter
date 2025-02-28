@@ -37,6 +37,7 @@ export class UserTestUtil {
   public static getMockUpdateUser(): UpdateUser {
     return  {
       name: "Test User update",
+      updatedBy: this._id!,
     }
   }
 
