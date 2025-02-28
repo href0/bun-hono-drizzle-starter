@@ -28,7 +28,7 @@ menuHandler.openapi(menuRoute.update, async (c) => {
   const body = c.req.valid('json')
   const id = c.req.valid('param').id
   const sub = c.get('jwtPayload').sub
-  const result = await menuService.update(id, {...body, createdBy: sub})
+  const result = await menuService.update(id, {...body, updatedBy: sub})
   return responseJson.OK(c, result, 'Menu updated successfully')
 })
 

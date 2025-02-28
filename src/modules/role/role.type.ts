@@ -5,6 +5,8 @@ import { roleSchemaQuery, roleSchemaResponse, roleSchemaUpdate } from "./role.sc
 
 export type Role = InferSelectModel<typeof rolesTable>
 export type InsertRole = InferInsertModel<typeof rolesTable>
-export type UpdateRole = z.infer<typeof roleSchemaUpdate>
+export type UpdateRole = z.infer<typeof roleSchemaUpdate> & {
+  updatedBy: number;
+};
 export type SelectRole = z.infer<typeof roleSchemaResponse>
 export type RoleQuerySchema = z.infer<typeof roleSchemaQuery>

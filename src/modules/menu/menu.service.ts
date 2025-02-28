@@ -2,7 +2,7 @@ import { and, desc, ilike, SQL } from "drizzle-orm"
 import { ConflictError, NotFoundError } from "../../utils/errors/http.error"
 import { dynamicQueryWithPagination, PaginatedResult } from "../../utils/helpers/pagination.helper"
 import { MENU_SELECT } from "../../utils/constants/select.constant"
-import { InsertMenu, MenuQuerySchema, SelectMenu } from "./menu.type"
+import { InsertMenu, MenuQuerySchema, SelectMenu, UpdateMenu } from "./menu.type"
 import { menuRepository } from "./menu.repository"
 import { menusTable } from "../../models/menu.model"
 
@@ -43,7 +43,7 @@ class MenuService {
     return result
   }
 
-  public async update(id: number, request: InsertMenu): Promise<SelectMenu> {
+  public async update(id: number, request: UpdateMenu): Promise<SelectMenu> {
     const result = await menuRepository.findById(id)
     if(!result) throw new NotFoundError('Menu Not Found')
 

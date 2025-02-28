@@ -28,7 +28,7 @@ roleHandler.openapi(roleRoute.update, async (c) => {
   const body = c.req.valid('json')
   const id = c.req.valid('param').id
   const sub = c.get('jwtPayload').sub
-  const result = await roleService.update(id, {...body, createdBy: sub})
+  const result = await roleService.update(id, {...body, updatedBy: sub})
   return responseJson.OK(c, result, 'Role updated successfully')
 })
 

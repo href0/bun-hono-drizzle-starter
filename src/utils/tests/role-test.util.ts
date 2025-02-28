@@ -54,6 +54,7 @@ export class RoleTestUtil {
   public static getMockUpdate(): UpdateRole {
     return  {
       name: "Test Role Updated",
+      updatedBy: this._userId!,
     }
   }
 
