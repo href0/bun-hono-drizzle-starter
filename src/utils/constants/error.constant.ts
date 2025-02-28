@@ -52,7 +52,7 @@ export const ERROR_MESSAGES = {
   ACCOUNT_LOCKED: 'Account is locked',
   EMAIL_ALREADY_EXISTS: 'Email already exists',
   USERNAME_ALREADY_EXISTS: 'Username already exists',
-  INVALID_PASSWORD: 'Invalid password',
+  INVALID_EMAIL_OR_PASSWORD: 'Invalid email or password!',
   PASSWORD_MISMATCH: 'Passwords do not match',
   INVALID_RESET_TOKEN: 'Invalid password reset token',
   FILE_TOO_LARGE: 'File size exceeds limit',

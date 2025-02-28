@@ -58,6 +58,7 @@ class UserServie {
     const valueToUpdate: UpdateUser = {
       email : request.email,
       name : request.name,
+      updatedBy: request.updatedBy,
     }
     const updated = await userRepository.update(id, valueToUpdate)
 
@@ -69,6 +70,7 @@ class UserServie {
     if(!result) throw new NotFoundError('User Not Found')
     const valueToUpdate: UpdateUser = {
       name : request.name,
+      updatedBy: request.updatedBy,
     }
     const updated = await userRepository.updateByEmail(email, valueToUpdate)
 

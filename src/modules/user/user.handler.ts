@@ -26,7 +26,8 @@ userHandler.openapi(userRoute.findOne, async (c) => {
 userHandler.openapi(userRoute.update, async (c) => {
   const { id } = c.req.valid('param')
   const request = c.req.valid('json')
-  const user = await userService.update(id, request)
+  const sub = c.get('jwtPayload').sub
+  const user = await userService.update(id, { ...request, updatedBy: sub })
   return responseJson.OK(c, user, 'User updated successfully')
 })
 
