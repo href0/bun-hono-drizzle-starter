@@ -1,13 +1,7 @@
 import { authService } from "../../modules/auth/auth.service";
 import { ResponseSignInAuthSchema, SignInAuthSchema, SignUpAuthSchema } from "../../modules/auth/auth.type";
 import { userService } from "../../modules/user/user.service";
-import { InsertUser, SelectUser, UpdateUser, User } from "../../modules/user/user.type";
-
-// export const mockUser: InsertUser = {
-//   email: "auth-test@example.com",
-//   name: "Test Auth",
-//   password: "password",
-// };
+import { SelectUser } from "../../modules/user/user.type";
 
 export class AuthTestUtil {
   private static _id: number | null = null
