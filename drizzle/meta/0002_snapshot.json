@@ -1,6 +1,6 @@
 {
-  "id": "9768ae37-6444-4855-8edd-67d7d1db892f",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "eb01ca0f-16c7-4c2b-8589-f094b0d749ea",
+  "prevId": "c5558fcb-940b-4975-a9ae-75d86e38175f",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -36,6 +36,20 @@
           "type": "varchar(20)",
           "primaryKey": false,
           "notNull": true
+        },
+        "url": {
+          "name": "url",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'#'"
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
         },
         "created_at": {
           "name": "created_at",
@@ -147,8 +161,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "api_endpoint": {
-          "name": "api_endpoint",
+        "url": {
+          "name": "url",
           "type": "varchar(100)",
           "primaryKey": false,
           "notNull": true
@@ -205,7 +219,7 @@
           "name": "endpoint_method_idx",
           "columns": [
             {
-              "expression": "api_endpoint",
+              "expression": "url",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -426,7 +440,7 @@
         },
         "name": {
           "name": "name",
-          "type": "varchar(10)",
+          "type": "varchar(30)",
           "primaryKey": false,
           "notNull": true
         },
@@ -531,6 +545,13 @@
           "type": "varchar(100)",
           "primaryKey": false,
           "notNull": true
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
         },
         "created_at": {
           "name": "created_at",

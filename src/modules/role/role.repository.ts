@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm"
+import { eq, SQL } from "drizzle-orm"
 import { db } from "../../config/db.config"
 import { rolesTable } from "../../models/role.model"
 import { ROLE_SELECT } from "../../utils/constants/select.constant"
@@ -36,8 +36,18 @@ class RoleRepository {
   }
 
   public async delete(id: number): Promise<void> {
-    await db.delete(rolesTable).where(eq(rolesTable.id, id))
+    await this._deleteWhere(eq(rolesTable.id, id))
   }
+
+  public async deleteByName(name: string): Promise<void> {
+    await this._deleteWhere(eq(rolesTable.name, name))
+  }
+
+   private async _deleteWhere(condition: SQL): Promise<void> {
+      await db
+        .delete(rolesTable)
+        .where(condition)
+    }
 }
 
 export const roleRepository = new RoleRepository()

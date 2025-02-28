@@ -6,18 +6,18 @@ export const roleSchemaResponse = z.object({
   name: z.string().openapi({ example : "admin" }),
   createdAt: z.date().openapi({ example : "2024-10-28" }),
   updatedAt: z.date().nullable().openapi({ example : "2024-10-28" }),
-  // createdBy: z.string().openapi({ example : "2024-10-28" }),
+  createdBy: z.number().openapi({ example : 1 }),
   // updatedBy: z.string().nullable().openapi({ example : "2024-10-28" }),
 })
 
 export const roleSchemaCreate = z.object({
   name: z.string().openapi({ example : "admin" }),
-  isSuperadmin: z.boolean().openapi({ example : false }),
+  isSuperadmin: z.boolean().optional().openapi({ example : false }),
 }).openapi('Create Role')
 
 export const roleSchemaUpdate = z.object({
   name: z.string().openapi({ example : "admin" }),
-  isSuperadmin: z.boolean().openapi({ example : false }),
+  isSuperadmin: z.boolean().optional().openapi({ example : false }),
 }).openapi('Update Role')
 
 export const roleSchemaParams =  z.object({

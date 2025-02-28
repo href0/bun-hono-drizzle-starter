@@ -1,15 +1,15 @@
 import { and, desc, ilike, SQL } from "drizzle-orm"
-import { NotFoundError } from "../../utils/errors/http.error"
+import { ConflictError, NotFoundError } from "../../utils/errors/http.error"
 import { dynamicQueryWithPagination, PaginatedResult } from "../../utils/helpers/pagination.helper"
 import { roleRepository } from "./role.repository"
-import { InsertRole, RoleQuerySchema, SelectRole } from "./role.type"
+import { InsertRole, RoleQuerySchema, SelectRole, UpdateRole } from "./role.type"
 import { rolesTable } from "../../models/role.model"
 import { ROLE_SELECT } from "../../utils/constants/select.constant"
 
 class RoleService {
   public async create(request: InsertRole): Promise<SelectRole> {
     const isExists = await roleRepository.findByName(request.name)
-    if(isExists) throw new NotFoundError('Role Already Exists!')
+    if(isExists) throw new ConflictError('Role Already Exists!')
 
     return roleRepository.create(request)
   }
@@ -43,7 +43,7 @@ class RoleService {
     return role
   }
 
-  public async update(id: number, request: InsertRole): Promise<SelectRole> {
+  public async update(id: number, request: UpdateRole): Promise<SelectRole> {
     const role = await roleRepository.findById(id)
     if(!role) throw new NotFoundError('Role Not Found')
 
@@ -52,6 +52,10 @@ class RoleService {
 
   public async remove(id: number): Promise<void> {
     await roleRepository.delete(id)
+  }
+
+  public async removeByName(name: string): Promise<void> {
+    await roleRepository.deleteByName(name)
   }
 
 }

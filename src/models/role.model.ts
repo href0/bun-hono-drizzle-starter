@@ -6,7 +6,7 @@ export const rolesTable = pgTable(
   "roles", 
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    name: varchar({ length: 10 }).notNull(),
+    name: varchar({ length: 30 }).notNull(),
     isSuperadmin: boolean().default(false),
     createdAt: timestamp({withTimezone : true, mode :'date', precision : 3}).defaultNow().notNull(),
     createdBy: integer().notNull(),

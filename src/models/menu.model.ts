@@ -1,14 +1,16 @@
 import { relations } from "drizzle-orm";
-import { integer, pgTable, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
+import { boolean, integer, pgTable, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
 import { usersTable } from "./user.model";
 import { subMenuTable } from "./sub-menu.model";
 
-export const menuTable = pgTable(
+export const menusTable = pgTable(
   "menus", 
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     name: varchar({ length: 10 }).notNull(),
     icon: varchar({ length: 20 }).notNull(),
+    url: varchar({ length: 10 }).notNull().default('#'),
+    isActive: boolean().default(false),
     createdAt: timestamp({withTimezone : true, mode :'date', precision : 3}).defaultNow().notNull(),
     updatedAt: timestamp({withTimezone : true, mode: 'date', precision: 3 }).$onUpdate(() => new Date()),
     createdBy: integer().notNull().references(() => usersTable.id, { onDelete: 'no action' }),
@@ -20,15 +22,15 @@ export const menuTable = pgTable(
   }
 );
 
-export const menuRelations = relations(menuTable, ({ many, one }) => ({
+export const menuRelations = relations(menusTable, ({ many, one }) => ({
   subMenu: many(subMenuTable),
   createdBy: one(usersTable, {
-    fields: [menuTable.createdBy],
+    fields: [menusTable.createdBy],
     references: [usersTable.id],
     relationName : 'createdBy'
   }),
   updatedBy: one(usersTable, {
-    fields: [menuTable.updatedBy],
+    fields: [menusTable.updatedBy],
     references: [usersTable.id],
     relationName : 'updatedBy'
   })
