@@ -3,7 +3,7 @@ import { db } from '../../config/db.config'
 import { USER_SELECT } from '../../utils/constants/select.constant'
 import { SelectUser, User } from '../user/user.type'
 import { SignUpAuthSchema } from './auth.type'
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 
 class AuthRepository {
   async signUp(data: SignUpAuthSchema): Promise<SelectUser> {
@@ -19,6 +19,21 @@ class AuthRepository {
     
     return user
   }
+
+  async getRefreshToken(email: string, refreshToken: string): Promise<{ id: number, refreshToken: string|null } | null> {
+    const [ result ] = await db
+      .select({ id: usersTable.id, refreshToken: usersTable.refreshToken })
+      .from(usersTable)
+      .where(
+        and(
+          eq(usersTable.email, email),
+          eq(usersTable.refreshToken, refreshToken),
+        )
+      )
+    
+    return result
+  }
+
 }
 
 export const authRepository = new AuthRepository()

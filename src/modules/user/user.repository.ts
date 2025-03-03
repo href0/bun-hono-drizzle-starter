@@ -1,4 +1,4 @@
-import { eq, SQL } from 'drizzle-orm'
+import { eq, sql, SQL } from 'drizzle-orm'
 import { usersTable } from '../../models/user.model'
 import { db } from '../../config/db.config'
 import { InsertUser, SelectUser } from './user.type'
@@ -47,10 +47,10 @@ class UserRepository {
     return user
   }
 
-  public async updateRefreshToken(id: number, refreshToken: string): Promise<void> {
+  public async updateRefreshToken(id: number, refreshToken: string | null): Promise<void> {
     await db
       .update(usersTable)
-      .set({ refreshToken : refreshToken })
+      .set({ refreshToken : refreshToken || sql`NULL` })
       .where(eq(usersTable.id, id))
   }
 

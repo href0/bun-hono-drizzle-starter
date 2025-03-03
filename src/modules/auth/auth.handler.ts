@@ -76,4 +76,15 @@ authHandler.openapi(authRoute.refreshToken, async(c) => {
   return responseJson.OK(c, result, 'Token refreshed successfully')
 })
 
+authHandler.openapi(authRoute.signOut, async(c) => {
+  const refreshToken = getCookie(c, 'refreshToken')
+  if(!refreshToken) return responseJson.OK(c, null, 'Sign out successfully')
+
+  const { email } = await verifyJWT(refreshToken, TokenType.REFRESH)
+  console.log('email', email)
+  await authService.signOut(email, refreshToken)
+  deleteCookie(c, 'refreshToken', cookieOptions())
+  return responseJson.OK(c, null, 'Sign out successfully')
+})
+
 export default authHandler

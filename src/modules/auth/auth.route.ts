@@ -42,6 +42,13 @@ class AuthRoute {
     tags : ['Auth'],
     responses:OpenAPIResponseHelper.createSuccessResponse(responseSignInAuthSchema, 'Token refreshed successfully')
   })
+
+  public readonly signOut = createRoute({
+    method: 'post',
+    path: '/signout',
+    tags : ['Auth'],
+    responses:OpenAPIResponseHelper.createSuccessResponse(null, 'Sign out successfully')
+  })
 }
 
 export const authRoute = new AuthRoute()

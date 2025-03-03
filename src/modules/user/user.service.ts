@@ -84,7 +84,7 @@ class UserServie {
     return updated
   }
   
-  public async updateRefreshToken(id: number, refreshToken: string): Promise<void> {
+  public async updateRefreshToken(id: number, refreshToken: string | null): Promise<void> {
     const user = await userRepository.findById(id)
     if(!user) throw new NotFoundError('User Not Found')
     await userRepository.updateRefreshToken(id, refreshToken)
