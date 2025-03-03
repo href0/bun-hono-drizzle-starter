@@ -22,6 +22,20 @@
       "when": 1740717522372,
       "tag": "0002_fat_hellfire_club",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1740967518003,
+      "tag": "0003_flimsy_whizzer",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1740967660667,
+      "tag": "0004_absent_viper",
+      "breakpoints": true
     }
   ]
 }

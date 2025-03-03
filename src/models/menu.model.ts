@@ -7,10 +7,10 @@ export const menusTable = pgTable(
   "menus", 
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    name: varchar({ length: 10 }).notNull(),
+    name: varchar({ length: 30 }).notNull(),
     icon: varchar({ length: 20 }).notNull(),
     url: varchar({ length: 10 }).notNull().default('#'),
-    isActive: boolean().default(false),
+    isActive: boolean().default(false).notNull(),
     createdAt: timestamp({withTimezone : true, mode :'date', precision : 3}).defaultNow().notNull(),
     updatedAt: timestamp({withTimezone : true, mode: 'date', precision: 3 }).$onUpdate(() => new Date()),
     createdBy: integer().notNull().references(() => usersTable.id, { onDelete: 'no action' }),

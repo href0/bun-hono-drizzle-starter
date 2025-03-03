@@ -4,6 +4,9 @@ import { queryPaginationSchema } from '../../utils/schemas/pagination.schema'
 export const menuSchemaResponse = z.object({
   id: z.number().openapi({ example : 1 }),
   name: z.string().openapi({ example : "admin" }),
+  icon: z.string().openapi({ example : "fas fa-user" }),
+  url: z.string().length(10).default('#').openapi({ example: "test"}),
+  isActive: z.boolean().default(false).openapi({ example: false }),
   createdAt: z.date().openapi({ example : "2024-10-28" }),
   updatedAt: z.date().nullable().openapi({ example : "2024-10-28" }),
   // createdBy: z.string().openapi({ example : "2024-10-28" }),
@@ -13,11 +16,15 @@ export const menuSchemaResponse = z.object({
 export const menuSchemaCreate = z.object({
   name: z.string().openapi({ example : "users" }),
   icon: z.string().openapi({ example : "fas fa-user" }),
+  url: z.string().length(10).default('#').openapi({ example: "test"}),
+  isActive: z.boolean().default(false).openapi({ example: false }),
 }).openapi('Create menu')
 
 export const menuSchemaUpdate = z.object({
   name: z.string().openapi({ example : "users" }),
   icon: z.string().openapi({ example : "fas fa-user" }),
+  url: z.string().length(10).default('#').openapi({ example: "test"}),
+  isActive: z.boolean().default(false).openapi({ example: false }),
 }).openapi('Update menu')
 
 export const menuSchemaParams =  z.object({

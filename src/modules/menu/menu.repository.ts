@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm"
+import { eq, SQL } from "drizzle-orm"
 import { db } from "../../config/db.config"
 import { menusTable } from "../../models/menu.model"
 import { MENU_SELECT } from "../../utils/constants/select.constant"
@@ -35,8 +35,22 @@ class MenuRepository {
     return updated
   }
 
+  // public async delete(id: number): Promise<void> {
+  //   await db.delete(menusTable).where(eq(menusTable.id, id))
+  // }
+
   public async delete(id: number): Promise<void> {
-    await db.delete(menusTable).where(eq(menusTable.id, id))
+    await this._deleteWhere(eq(menusTable.id, id))
+  }
+
+  public async deleteByName(name: string): Promise<void> {
+    await this._deleteWhere(eq(menusTable.name, name))
+  }
+
+  private async _deleteWhere(condition: SQL): Promise<void> {
+    await db
+      .delete(menusTable)
+      .where(condition)
   }
 }
 

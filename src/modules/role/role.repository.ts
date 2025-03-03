@@ -47,7 +47,7 @@ class RoleRepository {
       await db
         .delete(rolesTable)
         .where(condition)
-    }
+  }
 }
 
 export const roleRepository = new RoleRepository()

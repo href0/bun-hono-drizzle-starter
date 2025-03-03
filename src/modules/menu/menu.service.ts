@@ -51,7 +51,11 @@ class MenuService {
   }
 
   public async remove(id: number): Promise<void> {
-    await menuRepository.delete(id)
+      await menuRepository.delete(id)
+    }
+  
+  public async removeByName(name: string): Promise<void> {
+    await menuRepository.deleteByName(name)
   }
 }
 

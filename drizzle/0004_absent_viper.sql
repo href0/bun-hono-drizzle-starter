@@ -1,0 +1,1 @@
+ALTER TABLE "menus" ALTER COLUMN "name" SET DATA TYPE varchar(30);

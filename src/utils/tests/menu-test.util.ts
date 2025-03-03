@@ -1,42 +1,47 @@
-import { roleService } from "../../modules/role/role.service";
-import { InsertRole, SelectRole, UpdateRole } from "../../modules/role/role.type";
+import { menuService } from "../../modules/menu/menu.service";
+import { InsertMenu, SelectMenu, UpdateMenu } from "../../modules/menu/menu.type";
 import { UserTestUtil } from "./user-test.util";
 
-export class RoleTestUtil {
+export class MenuTestUtil {
   private static _id: number | null = null
   private static _userId: number | null = null
 
-  public static async create(): Promise<SelectRole> {
+  public static async create(): Promise<SelectMenu> {
     const user = await UserTestUtil.create()
     this.setUserId(user.id)
-    const result = await roleService.create(this.getMock());
+    const result = await menuService.create(this.getMock());
     this.setId(result.id)
     return result
   }
 
-  public static async update(): Promise<SelectRole> {
-    return roleService.update(this._id!, this.getMockUpdate())
+  public static async update(): Promise<SelectMenu> {
+    return menuService.update(this._id!, this.getMockUpdate())
   }
 
   public static async remove(id: number | null = null): Promise<void> {
     if(this._id || id) {
-      await roleService.remove(id || this._id!)
+      await menuService.remove(id || this._id!)
       this.clearId()
     }
     await UserTestUtil.remove()
   }
 
-  public static getMock(): InsertRole {
+  public static getMock(): InsertMenu {
     return {
-      name: "Test Role",
+      name: "Test Menu",
+      icon: "menu",
+      isActive: true,
+      url: "#",
       createdBy: this._userId!,
-      isSuperadmin: false
     }
   }
 
-  public static getMockUpdate(): UpdateRole {
+  public static getMockUpdate(): UpdateMenu {
     return  {
-      name: "Test Role Updated",
+      name: "Test Menu Updated",
+      icon: "menu",
+      isActive: true,
+      url: "Menu",
       updatedBy: this._userId!,
     }
   }
