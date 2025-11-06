@@ -1,57 +1,59 @@
-import { userService } from "../../modules/user/user.service";
-import { InsertUser, SelectUser, UpdateUser } from "../../modules/user/user.type";
 
-export const mockUser: InsertUser = {
-  email: "test@example.com",
-  name: "Test User",
-  password: "password",
-};
+// import { userService } from "../../modules/admin/user/user.instance";
+// import { UserInsert, UpdateUserDTO, UserResponse, UserUpdate, CreateUserDTO } from "../../modules/admin/user/user.type";
 
-export class UserTestUtil {
-  private static _id: number | null = null
+// export const mockUser: UserInsert = {
+//   name: "Test User",
+//   email: "test@example.com",
+//   password: "password",
+//   createdAt: new Date(),
+//   createdBy: 1
+// };
 
-  public static async create(): Promise<SelectUser> {
-    const user = await userService.create(this.getMockUser());
-    this.setId(user.id)
-    return user
-  }
+// export class UserTestUtil {
+//   private static _id: number | null = null
 
-  public static async update(): Promise<SelectUser> {
-    return userService.update(this._id!, this.getMockUpdateUser())
-  }
+//   public static async create(): Promise<UserResponse> {
+//     const user = await userService.create(this.getMockCreateUser(), 1);
+//     this.setId(user.id)
+//     return user
+//   }
 
-  public static async remove(id: number | null = null): Promise<void> {
-    if(!this._id && !id) return
-    await userService.remove(id || this._id!)
-    this.clearId()
-  }
+//   public static async update(): Promise<UserResponse> {
+//     return userService.update(this._id!, this.getMockUpdateUser(), 1)
+//   }
 
-  public static getMockUser(): InsertUser {
-    return  {
-      email: "test@example.com",
-      name: "Test User",
-      password: "password",
-    }
-  }
+//   public static async remove(id: number | null = null): Promise<void> {
+//     if(!this._id && !id) return
+//     await userService.remove(id || this._id!)
+//     this.clearId()
+//   }
 
-  public static getMockUpdateUser(): UpdateUser {
-    return  {
-      name: "Test User update",
-      updatedBy: this._id!,
-    }
-  }
+//   public static getMockCreateUser(): CreateUserDTO {
+//     return  {
+//       name: "Test User",
+//       email: "test@example.com",
+//       password: "password",
+//     }
+//   }
 
-  private static setId(id: number): void {
-    this._id = id
-  }
+//   public static getMockUpdateUser(): UpdateUserDTO {
+//     return  {
+//       name: "Test User Update"
+//     }
+//   }
 
-  public static getId(): number | null {
-    return this._id
-  }
+//   private static setId(id: number): void {
+//     this._id = id
+//   }
 
-  private static clearId(): void {
-    if(this._id !== null){
-      this._id = null
-    }
-  }
-}
+//   public static getId(): number | null {
+//     return this._id
+//   }
+
+//   private static clearId(): void {
+//     if(this._id !== null){
+//       this._id = null
+//     }
+//   }
+// }

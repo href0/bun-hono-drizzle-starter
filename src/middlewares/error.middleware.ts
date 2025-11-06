@@ -51,6 +51,7 @@ export const errorHandler = (error : Error, c : Context) => {
   if (NODE_ENV === NodeEnv.DEV) {
     response.stack = error.stack;
   }
+
   logger.error(response.message, {level : 'error', errors : response.errors, stack : NODE_ENV === NodeEnv.DEV ? error.stack : null})
-  return c.json(response, statusCode);
+  return c.json(response, statusCode as any);
 };

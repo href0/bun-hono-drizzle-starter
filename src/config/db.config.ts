@@ -7,6 +7,8 @@ export const pool = new Pool({
 });
 import * as user from '../models/user.model'
 import * as role from '../models/role.model'
+import * as menu from '../models/menu.model'
+import { NodeEnv } from '../utils/interfaces/env.interface';
 // Test koneksi dan tambahkan logger
 pool.connect()
   .then(() => {
@@ -17,10 +19,18 @@ pool.connect()
     console.error('❌ Unable to connect to the database:', error);
     process.exit()
 });
-
-export const db = drizzle({ schema: {...user, ...role} , client: pool, casing : 'snake_case', logger : {
+const schema = { 
+  usersTable: user.usersTable, 
+  usersRelation: user.usersRelations, 
+  ...role, 
+  ...menu,
+}
+export const db = drizzle({ schema: schema , client: pool, casing : 'snake_case', logger : {
   logQuery(query: string, params: any[]): void {
-    params = params.map(param => param.toString().includes('argon') ? 'SECRET' : param)
-    Bun.env.NODE_ENV !== 'test' && logger.info('EXECUTE QUERY',{sql : query, params: params})
+    params = params.map(param => {
+      if (param === null || param === undefined) return param;
+      return param.toString().includes('argon') ? 'SECRET' : param;
+    })
+    Bun.env.NODE_ENV !== NodeEnv.TEST && logger.info('EXECUTE QUERY',{sql : query, params: params})
   },
 }});

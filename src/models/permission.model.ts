@@ -1,35 +1,35 @@
-import { is, relations } from "drizzle-orm";
-import { boolean, integer, pgTable, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+import { integer, pgTable, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
 import { usersTable } from "./user.model";
+import { roleAccessMenuTable } from "./role-access-menu";
 
-export const permissionTable = pgTable(
+export const permissionsTable = pgTable(
   "permissions", 
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    name: varchar({ length: 10 }).notNull(),
+    name: varchar({ length: 30 }).notNull(),
     description: varchar({ length: 100 }),
-    url: varchar({ length: 100 }).notNull(),
-    method: varchar({ length: 10, enum: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'] }).notNull(),
+    api: varchar({ length: 100 }).notNull(),
     createdAt: timestamp({withTimezone : true, mode :'date', precision : 3}).defaultNow().notNull(),
     createdBy: integer().notNull().references(() => usersTable.id, { onDelete: 'no action' }),
     updatedAt: timestamp({withTimezone : true, mode: 'date', precision: 3 }).$onUpdate(() => new Date()),
     updatedBy: integer().references(() => usersTable.id, { onDelete: 'no action' }),
   }, (table) => {
     return {
-      nameIdx: uniqueIndex('permission_name_idx').on(table.name),
-      endpointMethodIdx: uniqueIndex('endpoint_method_idx').on(table.url, table.method)
+      permissionApiIdx: uniqueIndex('permission_api_idx').on(table.api),
     };
   }
 );
 
-export const permissionRelations = relations(permissionTable, ({ one }) => ({
+export const permissionRelations = relations(permissionsTable, ({ one, many }) => ({
+  roleAccessMenu: many(roleAccessMenuTable),
   createdBy: one(usersTable, {
-    fields: [permissionTable.createdBy],
+    fields: [permissionsTable.createdBy],
     references: [usersTable.id],
     relationName : 'createdBy'
   }),
   updatedBy: one(usersTable, {
-    fields: [permissionTable.updatedBy],
+    fields: [permissionsTable.updatedBy],
     references: [usersTable.id],
     relationName : 'updatedBy'
   })

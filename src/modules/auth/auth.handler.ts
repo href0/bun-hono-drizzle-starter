@@ -2,17 +2,17 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { defaultHookConfig } from "../../config/app.config";
 import { authRoute } from "./auth.route";
 import { responseJson } from "../../utils/helpers/response.helper";
-import { userService } from "../user/user.service";
 import { db } from "../../config/db.config";
 import { usersTable } from "../../models/user.model";
 import { eq } from "drizzle-orm";
 import { NotFoundError, TokenExpiredError, UnauthorizedError } from "../../utils/errors/http.error";
 import { generateJWT, TokenType, verifyJWT } from "../../utils/helpers/jwt.helper";
-import { ResponseSignInAuthSchema } from "./auth.type";
+import { ResponseSignIn } from "./auth.type";
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie'
 import { JWTPayloadUser } from "../../utils/interfaces/jwt.interface";
 import { cookieOptions } from "../../utils/helpers/common.helper";
-import { authService } from "./auth.service";
+import { authService } from "./auth.instance";
+import { userService } from "../admin/user/user.instance";
 
 const authHandler = new OpenAPIHono({defaultHook : defaultHookConfig()})
 
@@ -62,7 +62,7 @@ authHandler.openapi(authRoute.refreshToken, async(c) => {
     generateJWT(payload, TokenType.REFRESH),
   ])
 
-  const result : ResponseSignInAuthSchema = { 
+  const result : ResponseSignIn = { 
     id : user.id,
     name : user.name,
     email : user.email,

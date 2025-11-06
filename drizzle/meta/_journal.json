@@ -5,36 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1740483057214,
-      "tag": "0000_marvelous_vector",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1740624749043,
-      "tag": "0001_mean_sumo",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1740717522372,
-      "tag": "0002_fat_hellfire_club",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1740967518003,
-      "tag": "0003_flimsy_whizzer",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1740967660667,
-      "tag": "0004_absent_viper",
+      "when": 1757607052835,
+      "tag": "0000_silky_sentinel",
       "breakpoints": true
     }
   ]

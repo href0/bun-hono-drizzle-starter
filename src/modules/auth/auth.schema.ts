@@ -1,5 +1,5 @@
 import { z } from '@hono/zod-openapi'
-import { responseUserSchema } from '../user/user.schema'
+import { userResponseSchema } from '../admin/user/user.schema'
 
 export const signUpAuthSchema = z.object({
   email: z.string().email().openapi({ example : "john@gmail.com" }),
@@ -12,6 +12,6 @@ export const signInAuthSchema = z.object({
   password: z.string().min(6).openapi({ example : "password" }),
 }).openapi('Sign In')
 
-export const responseSignInAuthSchema = responseUserSchema.extend({
+export const responseSignInAuthSchema = userResponseSchema.extend({
   accessToken: z.string().openapi({ example : "askdioasuids90adjasiodjas" }),
 })

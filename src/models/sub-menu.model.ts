@@ -2,7 +2,7 @@ import { relations } from "drizzle-orm";
 import { boolean, integer, pgTable, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
 import { usersTable } from "./user.model";
 import { menusTable } from "./menu.model";
-import { rolePermissionTable } from "./role-permission.model";
+import { roleAccessMenuTable } from "./role-access-menu";
 
 export const subMenuTable = pgTable(
   "sub_menus", 
@@ -25,7 +25,7 @@ export const subMenuTable = pgTable(
 );
 
 export const subMenuRelations = relations(subMenuTable, ({ many, one }) => ({
-  rolePermission: many(rolePermissionTable),
+  roleAccessMenu: many(roleAccessMenuTable),
   menu: one(menusTable, {
     fields: [subMenuTable.menuId],
     references: [menusTable.id],

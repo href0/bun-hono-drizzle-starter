@@ -1,6 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { OpenAPIResponseHelper } from "../../utils/helpers/open-api-response.helper";
-import { responseUserSchema } from "../user/user.schema";
+import { userResponseSchema } from "../admin/user/user.schema";
 import { responseSignInAuthSchema, signInAuthSchema, signUpAuthSchema } from "./auth.schema";
 
 class AuthRoute {
@@ -17,7 +17,7 @@ class AuthRoute {
         }
       }
     },
-    responses:OpenAPIResponseHelper.createSuccessResponse(responseUserSchema, 'Sign up success')
+    responses:OpenAPIResponseHelper.createSuccessResponse(userResponseSchema, 'Sign up success')
   })
 
   public readonly signIn = createRoute({

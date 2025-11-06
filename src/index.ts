@@ -9,6 +9,7 @@ import { httpLogging } from './middlewares/http-logging.middleware';
 import { authMiddleware } from './middlewares/auth.middleware';
 import { roleMiddleware } from './middlewares/role.middleware';
 import authHandler from './modules/auth/auth.handler';
+import adminRoute from './routes/admin.route';
 
 const app = new OpenAPIHono();
 
@@ -59,8 +60,14 @@ app.doc31('/doc', {
 
 app.get('/swagger-doc', swaggerUI({ url: '/doc' }))
 app.route('/api/auth', authHandler)
-app.use('/api/*', authMiddleware, roleMiddleware)
-app.route('/api', apiRoute)
+app.use('/api/*', authMiddleware)
+
+// Protected API
+
+
+// Private API
+app.use(roleMiddleware)
+app.route('/api/admin', adminRoute)
 app.onError(errorHandler)
 
 export default {  

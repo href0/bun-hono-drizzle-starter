@@ -1,26 +1,28 @@
-import { deleteCookie, setCookie } from "hono/cookie";
 import { ERROR_MESSAGES } from "../../utils/constants/error.constant";
 import { BadRequestError, ConflictError } from "../../utils/errors/http.error";
-import { cookieOptions, hashPassword } from "../../utils/helpers/common.helper";
+import { hashPassword } from "../../utils/helpers/common.helper";
 import { generateJWT, TokenType } from "../../utils/helpers/jwt.helper";
 import { JWTPayloadUser } from "../../utils/interfaces/jwt.interface";
-import { userRepository } from "../user/user.repository";
-import { userService } from "../user/user.service";
-import { SelectUser } from "../user/user.type";
-import { authRepository } from "./auth.repository";
-import { ResponseSignInAuthSchema, SignUpAuthSchema } from "./auth.type";
-import { db } from "../../config/db.config";
+import { UserService } from "../admin/user/user.service";
+import { UserResponse } from "../admin/user/user.type";
+import { AuthRepository } from "./auth.repository";
+import { ResponseSignIn, SignUpDTO } from "./auth.type";
 
-class AuthService {
-  public async signUp(request: SignUpAuthSchema): Promise<SelectUser> {
-    const check = await userRepository.findByEmail(request.email)
+export class AuthService {
+  constructor(
+    private readonly authRepository: AuthRepository,
+    private readonly userService: UserService,
+  ) {}
+
+  public async signUp(request: SignUpDTO): Promise<UserResponse> {
+    const check = await this.authRepository.checkEmailExists(request.email)
     if(check) throw new ConflictError(ERROR_MESSAGES.EMAIL_ALREADY_EXISTS)
     request.password = await hashPassword(request.password)
-    return authRepository.signUp(request)
+    return this.authRepository.signUp(request)
   }
 
-  public async signIn(email: string, password: string): Promise<{result: ResponseSignInAuthSchema, refreshToken: string}> {
-    const user = await authRepository.signIn(email)
+  public async signIn(email: string, password: string): Promise<{result: ResponseSignIn, refreshToken: string}> {
+    const user = await this.authRepository.signIn(email)
     if(!user) throw new BadRequestError(ERROR_MESSAGES.INVALID_EMAIL_OR_PASSWORD)
     
     const isPasswordMatch = await Bun.password.verify(password, user.password)
@@ -37,7 +39,7 @@ class AuthService {
       generateJWT(payload, TokenType.REFRESH),
     ])
   
-    const result : ResponseSignInAuthSchema = { 
+    const result : ResponseSignIn = { 
       id : user.id,
       name : user.name,
       email : user.email,
@@ -45,16 +47,14 @@ class AuthService {
       updatedAt : user.updatedAt,
       accessToken : accessToken 
     }
-    await userService.updateRefreshToken(user.id, refreshToken)
+    await this.userService.updateRefreshToken(user.id, refreshToken)
     return { result, refreshToken }
   }
 
   public async signOut(email: string, refreshToken: string): Promise<void> {
-    const checkRefreshToken = await authRepository.getRefreshToken(email, refreshToken)
+    const checkRefreshToken = await this.authRepository.getRefreshToken(email, refreshToken)
     if(!checkRefreshToken) return
 
-    await userService.updateRefreshToken(checkRefreshToken.id, null)
+    await this.userService.updateRefreshToken(checkRefreshToken.id, null)
   } 
 }
-
-export const authService = new AuthService()

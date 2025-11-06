@@ -1,18 +1,27 @@
 import { usersTable } from '../../models/user.model'
 import { db } from '../../config/db.config'
 import { USER_SELECT } from '../../utils/constants/select.constant'
-import { SelectUser, User } from '../user/user.type'
-import { SignUpAuthSchema } from './auth.type'
+import { UserResponse, User, UserInsert } from '../admin/user/user.type'
+import { SignUpDTO } from './auth.type'
 import { and, eq } from 'drizzle-orm'
 
-class AuthRepository {
-  async signUp(data: SignUpAuthSchema): Promise<SelectUser> {
-    const [user] = await db.insert(usersTable).values(data).returning(USER_SELECT)
+export class AuthRepository {
+  constructor(private readonly conn: typeof db = db) {}
+
+  async signUp(data: SignUpDTO): Promise<UserResponse> {
+    const payload: UserInsert = {
+      email: data.email,
+      name: data.name,
+      password: data.password,
+      createdAt: new Date(),
+      createdBy: 1, // system
+    }
+    const [user] = await this.conn.insert(usersTable).values(payload).returning(USER_SELECT)
     return user
   }
 
   async signIn(email: string): Promise<User | null> {
-    const [ user ] = await db
+    const [ user ] = await this.conn
       .select()
       .from(usersTable)
       .where(eq(usersTable.email, email))
@@ -34,6 +43,13 @@ class AuthRepository {
     return result
   }
 
-}
+  async checkEmailExists(email: string): Promise<boolean> {
+    const [ user ] = await db
+      .select({ id: usersTable.id })
+      .from(usersTable)
+      .where(eq(usersTable.email, email))
 
-export const authRepository = new AuthRepository()
+    return user !== undefined
+  }
+
+}

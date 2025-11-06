@@ -1,15 +1,20 @@
 import { relations } from "drizzle-orm";
-import { boolean, integer, pgTable, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
+import { AnyPgColumn, boolean, integer, pgTable, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
 import { usersTable } from "./user.model";
-import { subMenuTable } from "./sub-menu.model";
 
 export const menusTable = pgTable(
   "menus", 
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    name: varchar({ length: 30 }).notNull(),
-    icon: varchar({ length: 20 }).notNull(),
-    url: varchar({ length: 10 }).notNull().default('#'),
+    parentId: integer().references((): AnyPgColumn => menusTable.id, {
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    }),
+    name: varchar({ length: 50 }).notNull(),
+    icon: varchar({ length: 50 }).notNull(),
+    url: varchar({ length: 50 }).notNull().default('#'),
+    apiEndpoint: varchar({ length: 50 }),
+    apiDescription: varchar({ length: 100 }),
     isActive: boolean().default(false).notNull(),
     createdAt: timestamp({withTimezone : true, mode :'date', precision : 3}).defaultNow().notNull(),
     updatedAt: timestamp({withTimezone : true, mode: 'date', precision: 3 }).$onUpdate(() => new Date()),
@@ -17,21 +22,29 @@ export const menusTable = pgTable(
     updatedBy: integer().references(() => usersTable.id, { onDelete: 'no action' }),
   }, (table) => {
     return {
-      nameIdx: uniqueIndex('menu_name_idx').on(table.name)
+      nameIdx: uniqueIndex('menu_name_idx').on(table.name),
+      apiEndpointIdx: uniqueIndex('api_endpoint_idx').on(table.apiEndpoint),
     };
   }
 );
 
 export const menuRelations = relations(menusTable, ({ many, one }) => ({
-  subMenu: many(subMenuTable),
-  createdBy: one(usersTable, {
+  // parent: one(menusTable, {
+  //   fields: [menusTable.parentId],
+  //   references: [menusTable.id],
+  //   relationName: 'parent_child',
+  // }),
+  // children: many(menusTable, {
+  //   relationName: 'parent_child',
+  // }),
+  createdByUser: one(usersTable, {
     fields: [menusTable.createdBy],
     references: [usersTable.id],
-    relationName : 'createdBy'
+    relationName : 'createdByUser'
   }),
-  updatedBy: one(usersTable, {
+  updatedByUser: one(usersTable, {
     fields: [menusTable.updatedBy],
     references: [usersTable.id],
-    relationName : 'updatedBy'
+    relationName : 'updatedByUser'
   })
 }));
