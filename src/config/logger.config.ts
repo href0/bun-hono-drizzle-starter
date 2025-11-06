@@ -45,5 +45,5 @@ export const logger = createLogger({
 });
 
 // if (Bun.env.NODE_ENV !== NodeEnv.PROD) {
-//   logger.add(new transports.Console());
+logger.add(new transports.Console());
 // }
