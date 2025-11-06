@@ -4,7 +4,7 @@ FROM oven/bun:1.0.29 AS builder
 WORKDIR /app
 
 # Copy package files
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
 
 # Install dependencies for building
 RUN bun install --frozen-lockfile
@@ -25,7 +25,7 @@ WORKDIR /app
 
 # Copy only the necessary built files and configurations
 COPY --from=builder /app/package.json ./
-COPY --from=builder /app/bun.lockb ./
+COPY --from=builder /app/bun.lock ./
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/drizzle ./drizzle
 COPY --from=builder /app/drizzle.config.ts ./

@@ -103,7 +103,7 @@ This starter template is designed to serve as a base for new projects using Bun,
 ├── Dockerfile
 ├── docker-compose.yml
 ├── PROJECT_STRUCTURE.md
-├── bun.lockb
+├── bun.lock
 ├── drizzle.config.ts
 ├── package.json
 └── README.md
