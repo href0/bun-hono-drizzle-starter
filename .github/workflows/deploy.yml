@@ -29,6 +29,13 @@ jobs:
           echo "🏗️ Building and starting containers..."
           docker compose -f docker-compose.prod.yml up -d --build
           
+          echo "⏳ Waiting for app container to be ready..."
+          sleep 5
+          
+          echo "🗄️ Running database migrations..."
+          docker compose -f docker-compose.prod.yml exec -T app bun run db:generate
+          docker compose -f docker-compose.prod.yml exec -T app bun run db:migrate
+          
           echo "✅ Deployment completed!"
           
           echo "📊 Container status:"
