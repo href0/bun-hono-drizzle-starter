@@ -6,3 +6,31 @@ logs
 dist
 certbot/
 nginx/
+
+# SSL Certificates (JANGAN COMMIT!)
+certbot/
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+
+# Database
+*.sqlite
+*.db
+
+# Docker volumes
+postgres_data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
