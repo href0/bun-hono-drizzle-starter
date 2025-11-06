@@ -19,16 +19,17 @@ jobs:
         port: ${{ secrets.VPS_PORT }}
         script: |
           cd /home/ubuntu/bun-hono-drizzle-starter
+          
           echo "🔄 Pulling latest code..."
           git pull origin main
           
           echo "🛑 Stopping containers..."
-          docker compose down
+          docker compose -f docker-compose.prod.yml down
           
           echo "🏗️ Building and starting containers..."
-          docker compose up -d --build
+          docker compose -f docker-compose.prod.yml up -d --build
           
           echo "✅ Deployment completed!"
           
           echo "📊 Container status:"
-          docker compose ps
+          docker compose -f docker-compose.prod.yml ps
