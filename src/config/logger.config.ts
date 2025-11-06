@@ -12,7 +12,7 @@ const logFormat = printf(({ level, message, timestamp, sql, params, duration, er
   if (errors) log += `\nMESSAGE: ${typeof errors === 'string' ? errors : JSON.stringify(errors)}`;
   if (stack) log += `\nSTACK: ${typeof stack === 'string' ? stack : JSON.stringify(stack)}`;
   if (duration) log += `\nDURATION: ${typeof duration === 'string' ? duration : JSON.stringify(duration)}ms`;
- 
+
   return log;
 });
 
@@ -33,17 +33,37 @@ export const logger = createLogger({
       datePattern: 'YYYY-MM-DD',
       maxSize: '20m',
       maxFiles: '30d',
-      format:  combine(
+      format: combine(
+        timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        logFormat
+      )
+    }),
+    new transports.DailyRotateFile({
+      filename: 'logs/error-%DATE%.log',
+      level: 'error',
+      datePattern: 'YYYY-MM-DD',
+      maxSize: '20m',
+      maxFiles: '30d',
+      format: combine(
         timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
         logFormat
       )
     }),
     // new transports.File({ filename: 'logs/error.log', level: 'error' }),
     // new transports.File({ filename: 'logs/combined.log' }),
-    // new tr
   ]
 });
 
-// if (Bun.env.NODE_ENV !== NodeEnv.PROD) {
-logger.add(new transports.Console());
-// }
+if (Bun.env.NODE_ENV !== NodeEnv.PROD) {
+  logger.add(new transports.Console());
+}
+
+if (Bun.env.NODE_ENV === NodeEnv.PROD) {
+  logger.add(new transports.Console({
+    level: 'error',
+    format: combine(
+      timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+      logFormat
+    )
+  }))
+}
