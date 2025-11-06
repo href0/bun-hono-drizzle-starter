@@ -7,3 +7,9 @@ Dockerfile.dev
 .env
 logs
 init.sql
+certbot/
+nginx/
+.git/
+.github/
+node_modules/
+*.log
