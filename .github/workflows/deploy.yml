@@ -23,12 +23,12 @@ jobs:
           git pull origin main
           
           echo "🛑 Stopping containers..."
-          docker-compose down
+          docker compose down
           
           echo "🏗️ Building and starting containers..."
-          docker-compose up -d --build
+          docker compose up -d --build
           
           echo "✅ Deployment completed!"
           
           echo "📊 Container status:"
-          docker-compose ps
+          docker compose ps
