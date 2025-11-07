@@ -5,7 +5,6 @@ node_modules/
 logs
 dist
 certbot/
-nginx/
 
 # SSL Certificates (JANGAN COMMIT!)
 certbot/
