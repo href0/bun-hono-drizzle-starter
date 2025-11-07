@@ -29,9 +29,9 @@ app.get('/', (c) => {
 app.doc31('/doc', {
   openapi: '3.1.0',
   info: {
-    title: 'Role Base Access Control (RBAC) Management API',
+    title: 'Bun Hono Drizzle Starter Management API',
     version: 'v1',
-    description: 'This is a simple API for Role Base Access Control (RBAC) management',
+    // description: 'This is a simple API management',
     license: { name: "by Anzeru HREF", url: "https://github.com/href0/" },
     contact: {email: "me@hrefdev.be", name: "Anzeru HREF", url: "https://github.com/href0/"},
   },
